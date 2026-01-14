@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://cuftekcatbj70"]
+
+[node name="Main" type="Node2D"]
+
+[node name="Board" type="Node2D" parent="."]
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="ScoreLabel" type="Label" parent="UI"]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 81.0
+offset_bottom = 43.0
+text = "Score: 0"
