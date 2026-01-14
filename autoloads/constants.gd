@@ -1,0 +1,1 @@
+const SIZE = 32
