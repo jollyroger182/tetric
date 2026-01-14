@@ -1,0 +1,56 @@
+[gd_scene load_steps=3 format=3 uid="uid://gjf3hyl7gscq"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1h4yd"]
+font_size = 60
+
+[sub_resource type="LabelSettings" id="LabelSettings_oa53l"]
+font_size = 32
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_top = 20.0
+
+[node name="GameTitle" type="Label" parent="TitleContainer"]
+layout_mode = 2
+text = "TETRIC"
+label_settings = SubResource("LabelSettings_1h4yd")
+horizontal_alignment = 1
+
+[node name="GameTagline" type="Label" parent="TitleContainer"]
+layout_mode = 2
+text = "like tetris but better (TM)"
+label_settings = SubResource("LabelSettings_oa53l")
+horizontal_alignment = 1
+
+[node name="ButtonsContainer" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="PlayButton" type="Button" parent="ButtonsContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Play"
+
+[node name="QuitButton" type="Button" parent="ButtonsContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Quit"
