@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://bmw36fknked8f"]
+[gd_scene load_steps=5 format=3 uid="uid://bmw36fknked8f"]
 
 [ext_resource type="Script" uid="uid://lnde6jqdi0ol" path="res://scenes/components/tetromino/tetromino.gd" id="1_anylu"]
 [ext_resource type="Texture2D" uid="uid://biupmqo5o7vib" path="res://assets/images/cell.png" id="2_2mgpo"]
+[ext_resource type="Script" uid="uid://bhkff2w82yn24" path="res://scenes/components/tetromino/input.gd" id="3_2mgpo"]
+[ext_resource type="Script" uid="uid://br40t2l7js0wx" path="res://scenes/components/tetromino/gravity.gd" id="4_tfj2p"]
 
 [node name="Tetromino" type="Node2D"]
 script = ExtResource("1_anylu")
@@ -21,3 +23,11 @@ centered = false
 [node name="Cell4" type="Sprite2D" parent="."]
 texture = ExtResource("2_2mgpo")
 centered = false
+
+[node name="InputHandler" type="Node" parent="." node_paths=PackedStringArray("piece")]
+script = ExtResource("3_2mgpo")
+piece = NodePath("..")
+
+[node name="Gravity" type="Node" parent="." node_paths=PackedStringArray("piece")]
+script = ExtResource("4_tfj2p")
+piece = NodePath("..")
