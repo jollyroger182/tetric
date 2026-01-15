@@ -8,6 +8,17 @@ const cell_image = preload("res://assets/images/cell.png")
 @onready var cells: Array[Node2D] = [$Cell1, $Cell2, $Cell3, $Cell4]
 @onready var input_handler = $InputHandler
 
+# O, I, S, Z, L, J, T
+const shapes: Array[Array] = [
+	[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(0, -1), Vector2i(0, 0)],
+	[Vector2i(0, -2), Vector2i(0, -1), Vector2i(0, 0), Vector2i(0, 1)],
+	[Vector2i(-1, 0), Vector2i(0, 0), Vector2i(0, -1), Vector2i(1, -1)],
+	[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(0, 0), Vector2i(1, 0)],
+	[Vector2i(-1, -2), Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(0, 0)],
+	[Vector2i(0, -2), Vector2i(0, -1), Vector2i(0, 0), Vector2i(-1, 0)],
+	[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(0, 0), Vector2i(1, -1)],
+]
+
 var offsets: Array[Vector2i] = [
 	Vector2i(0, 0),
 	Vector2i(0, 1),
@@ -17,8 +28,9 @@ var offsets: Array[Vector2i] = [
 
 var offset = Vector2i.ZERO
 
-	
+
 func _ready() -> void:
+	offsets.assign(shapes[randi_range(0, shapes.size()-1)])
 	for i in range(4):
 		cells[i].position = offsets[i] * Constants.SIZE
 		cells[i].scale.x = 1.0 * Constants.SIZE / cell_image.get_width()
