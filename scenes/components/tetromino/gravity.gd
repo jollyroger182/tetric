@@ -1,7 +1,7 @@
 extends Node
 
 @export var piece: Tetromino
-@export var fall_interval = 0.5
+@export var fall_interval = 1.0
 
 var time = 0.0
 

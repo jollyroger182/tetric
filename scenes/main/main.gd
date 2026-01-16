@@ -1,14 +1,12 @@
 extends Node2D
 
 @onready var board: Board = $Board
-@onready var pause_menu: Control = %PauseMenu
+@onready var pause_manager = $PauseManager
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	board.spawn_piece()
 
 
 func _on_resume() -> void:
-	pause_menu.hide()
-	get_tree().paused = false
+	pause_manager.toggle_pause()
