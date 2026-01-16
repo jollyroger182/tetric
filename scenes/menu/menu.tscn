@@ -53,10 +53,16 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Play"
 
+[node name="EditorButton" type="Button" parent="ButtonsContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Level Editor"
+
 [node name="QuitButton" type="Button" parent="ButtonsContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Quit"
 
 [connection signal="pressed" from="ButtonsContainer/PlayButton" to="." method="_on_play"]
+[connection signal="pressed" from="ButtonsContainer/EditorButton" to="." method="_on_level_editor"]
 [connection signal="pressed" from="ButtonsContainer/QuitButton" to="." method="_on_quit"]
