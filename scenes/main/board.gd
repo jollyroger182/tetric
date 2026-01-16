@@ -4,21 +4,21 @@ class_name Board
 const Tetromino = preload("res://scenes/components/tetromino/tetromino.tscn")
 const Cell = preload("res://scenes/components/tetromino/cell.tscn")
 
-var filled_tiles: Array[Vector2i] = []
+var filled_tiles: Dictionary = {}
 
 
 func _draw():
 	var width = Constants.BOARD_SIZE.x * Constants.SIZE + 10
 	var height = Constants.BOARD_SIZE.y * Constants.SIZE + 10
 	
-	var rect = Rect2(-width/2.0-5, -5, width, height)
+	var rect = Rect2(-5, -5, width, height)
 	
 	draw_rect(rect, Color.WHITE, false, 2)
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	position.x = Constants.BOARD_SIZE.x * Constants.SIZE / 2.0 + 20
+	position.x = 20
 	position.y = \
 		get_viewport().get_visible_rect().size.y \
 		- Constants.BOARD_SIZE.y \
@@ -27,26 +27,61 @@ func _ready() -> void:
 	print(position.x)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
-
-func _add_filled_tile(location: Vector2i):
+func _add_filled_tile(location: Vector2i, color: Color):
 	if location in filled_tiles:
 		return
-	filled_tiles.append(location)
 	
 	var sprite = Cell.instantiate()
 	sprite.position = location * Constants.SIZE
+	sprite.modulate = color
 	add_child(sprite)
+	
+	filled_tiles[location] = sprite
 
 
 func _on_piece_landed(piece: Tetromino):
 	for tile in piece.offsets:
-		_add_filled_tile(piece.offset + tile)
+		_add_filled_tile(piece.offset + tile, piece.modulate)
 	piece.queue_free()
+	_check_filled_rows()
 	spawn_piece()
+
+
+func _check_filled_rows():
+	var cleared_rows = []
+	for y in range(Constants.BOARD_SIZE.y):
+		var is_cleared = true
+		for x in range(Constants.BOARD_SIZE.x):
+			if Vector2i(x, y) not in filled_tiles:
+				is_cleared = false
+				break
+		if not is_cleared:
+			continue
+		
+		cleared_rows.append(y)
+		for x in range(Constants.BOARD_SIZE.x):
+			var offset = Vector2i(x, y)
+			var node = filled_tiles[offset]
+			node.queue_free()
+			filled_tiles.erase(offset)
+			
+	if not cleared_rows.is_empty():
+		var new_filled_tiles := {}
+		# calculate how much each row needs to shift
+		var last_shift = 0
+		var shifts = []
+		shifts.resize(Constants.BOARD_SIZE.y)
+		shifts.fill(0)
+		for y in range(Constants.BOARD_SIZE.y-1, 0, -1):
+			if y in cleared_rows:
+				last_shift += 1
+			shifts[y] = last_shift
+		for key in filled_tiles:
+			var new_offset = Vector2i(key.x, key.y + shifts[key.y])
+			var sprite = filled_tiles[key]
+			sprite.position = new_offset * Constants.SIZE
+			new_filled_tiles[new_offset] = sprite
+		filled_tiles = new_filled_tiles
 
 
 func spawn_piece():
@@ -54,6 +89,7 @@ func spawn_piece():
 	tetromino.board = self
 	tetromino.name = "ActivePiece"
 	tetromino.landed.connect(_on_piece_landed)
+	tetromino.offset = Vector2i(Constants.BOARD_SIZE.x/2, 0)
 	add_child(tetromino)
 
 
@@ -62,8 +98,8 @@ func can_place(offset: Vector2i, piece: Array[Vector2i]) -> bool:
 		var pos = offset + tile
 		if (
 			pos in filled_tiles or
-			pos.x < -Constants.BOARD_SIZE.x/2 or
-			pos.x >= Constants.BOARD_SIZE.x/2 or
+			pos.x < 0 or
+			pos.x >= Constants.BOARD_SIZE.x or
 			pos.y < 0 or
 			pos.y >= Constants.BOARD_SIZE.y
 		):

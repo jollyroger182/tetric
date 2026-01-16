@@ -9,14 +9,14 @@ const cell_image = preload("res://assets/images/cell.png")
 @onready var input_handler = $InputHandler
 
 # O, I, S, Z, L, J, T
-const shapes: Array[Array] = [
-	[Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(0, -1), Vector2i(0, 0)],
-	[Vector2i(0, -2), Vector2i(0, -1), Vector2i(0, 0), Vector2i(0, 1)],
-	[Vector2i(-1, 0), Vector2i(0, 0), Vector2i(0, -1), Vector2i(1, -1)],
-	[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(0, 0), Vector2i(1, 0)],
-	[Vector2i(-1, -2), Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(0, 0)],
-	[Vector2i(0, -2), Vector2i(0, -1), Vector2i(0, 0), Vector2i(-1, 0)],
-	[Vector2i(-1, -1), Vector2i(0, -1), Vector2i(0, 0), Vector2i(1, -1)],
+var SHAPES: Array[Dictionary] = [
+	_make_shape("O", [-1, -1, -1, 0, 0, -1, 0, 0], Color("#F0F000")),
+	_make_shape("I", [0, -2, 0, -1, 0, 0, 0, 1], Color("#00F0F0")),
+	_make_shape("S", [-1, 0, 0, 0, 0, -1, 1, -1], Color("#00F000")),
+	_make_shape("Z", [-1, -1, 0, -1, 0, 0, 1, 0], Color("#F00000")),
+	_make_shape("L", [-1, -2, -1, -1, -1, 0, 0, 0], Color("#F0A000")),
+	_make_shape("J", [0, -2, 0, -1, 0, 0, -1, 0], Color("#0000F0")),
+	_make_shape("T", [-1, -1, 0, -1, 0, 0, 1, -1], Color("#A000F0")),
 ]
 
 var offsets: Array[Vector2i] = [
@@ -28,12 +28,16 @@ var offsets: Array[Vector2i] = [
 
 var offset = Vector2i.ZERO
 
+var has_landed := false
+
 
 signal landed(piece: Tetromino)
 
 
 func _ready() -> void:
-	offsets.assign(shapes[randi_range(0, shapes.size()-1)])
+	var shape = SHAPES[randi_range(0, SHAPES.size()-1)]
+	offsets.assign(shape["tiles"])
+	modulate = shape["color"]
 	var min_y = 0
 	for i in range(4):
 		min_y = min(min_y, offsets[i].y)
@@ -53,9 +57,12 @@ func try_move(direction: Vector2i):
 	if board.can_place(offset + direction, offsets):
 		offset += direction
 		update_position()
+		return true
 	else:
-		if direction == Vector2i.DOWN:
+		if direction == Vector2i.DOWN and not has_landed:
+			has_landed = true
 			landed.emit(self)
+		return false
 
 
 func try_rotate(ccw: bool):
@@ -66,3 +73,15 @@ func try_rotate(ccw: bool):
 	if board.can_place(offset, new_piece):
 		offsets.assign(new_piece)
 		update_position()
+
+
+func hard_drop():
+	while try_move(Vector2i.DOWN):
+		pass
+
+
+func _make_shape(name: String, offsets: Array[int], color: Color):
+	var tiles = []
+	for i in range(4):
+		tiles.append(Vector2i(offsets[i*2], offsets[i*2+1]))
+	return { "name": name, "tiles": tiles, "color": color }

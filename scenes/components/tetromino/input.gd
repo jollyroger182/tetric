@@ -12,3 +12,5 @@ func _process(delta: float) -> void:
 		piece.try_move(Vector2i.RIGHT)
 	if Input.is_action_just_pressed("soft_drop"):
 		piece.try_move(Vector2i.DOWN)
+	if Input.is_action_just_pressed("hard_drop"):
+		piece.hard_drop()
