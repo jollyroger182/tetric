@@ -1,13 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://cuftekcatbj70"]
+[gd_scene load_steps=5 format=3 uid="uid://cuftekcatbj70"]
 
 [ext_resource type="Script" uid="uid://dl2aask6rqgmy" path="res://scenes/main/board.gd" id="1_hyk8p"]
 [ext_resource type="Script" uid="uid://c5ssj84mmqqk0" path="res://scenes/main/main.gd" id="1_iuonh"]
+[ext_resource type="PackedScene" uid="uid://cvv8knlqearhw" path="res://scenes/pause_menu/pause_menu.tscn" id="3_k2fmo"]
+[ext_resource type="Script" uid="uid://ncieqt2bdoth" path="res://scenes/main/pause_manager.gd" id="4_l3cfh"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_iuonh")
 
 [node name="Board" type="Node2D" parent="."]
 script = ExtResource("1_hyk8p")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("3_k2fmo")]
+unique_name_in_owner = true
+visible = false
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -17,3 +25,9 @@ offset_top = 20.0
 offset_right = 81.0
 offset_bottom = 43.0
 text = "Score: 0"
+
+[node name="PauseManager" type="Node" parent="."]
+process_mode = 3
+script = ExtResource("4_l3cfh")
+
+[connection signal="resume" from="CanvasLayer/PauseMenu" to="." method="_on_resume"]

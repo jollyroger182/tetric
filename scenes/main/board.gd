@@ -89,7 +89,7 @@ func spawn_piece():
 	tetromino.board = self
 	tetromino.name = "ActivePiece"
 	tetromino.landed.connect(_on_piece_landed)
-	tetromino.offset = Vector2i(Constants.BOARD_SIZE.x/2, 0)
+	tetromino.offset = Vector2i(Constants.BOARD_SIZE.x/2-1, 0)
 	add_child(tetromino)
 
 

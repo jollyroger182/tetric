@@ -1,6 +1,7 @@
 extends Node2D
 
 @onready var board: Board = $Board
+@onready var pause_menu: Control = %PauseMenu
 
 
 # Called when the node enters the scene tree for the first time.
@@ -8,6 +9,6 @@ func _ready() -> void:
 	board.spawn_piece()
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func _on_resume() -> void:
+	pause_menu.hide()
+	get_tree().paused = false
