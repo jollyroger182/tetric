@@ -13,6 +13,7 @@ font_size = 32
 script = ExtResource("1_ahyo7")
 
 [node name="FilePicker" parent="." instance=ExtResource("4_f4xfo")]
+filter = "*.wav,*.wave,*.zip;.WAV Files and .ZIP Game Files;audio/vnd.wav,audio/vnd.wave,audio.wav,audio.wave,application/zip"
 
 [node name="Conductor" type="AudioStreamPlayer" parent="."]
 script = ExtResource("2_le4y8")

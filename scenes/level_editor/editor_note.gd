@@ -1,12 +1,20 @@
-extends ColorRect
+extends Control
+class_name EditorNote
 
-const NORMAL_COLOR = Color.WHITE
-const HOVER_COLOR = Color.LIGHT_GRAY
+@export var time: float
 
-
-func _on_mouse_entered() -> void:
-	color = HOVER_COLOR
+signal deleted(note: EditorNote)
 
 
-func _on_mouse_exited() -> void:
-	color = NORMAL_COLOR
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	position.x = time * Constants.EDITOR_SCALE
+
+
+func _on_button_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		match event.button_index:
+			MOUSE_BUTTON_LEFT:
+				deleted.emit(self)
+			MOUSE_BUTTON_RIGHT:
+				pass

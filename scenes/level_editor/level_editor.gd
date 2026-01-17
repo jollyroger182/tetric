@@ -8,13 +8,9 @@ var GameFile = preload("res://utils/game_file.gd")
 @onready var ui_title = $UI/Title
 @onready var ui_notes = $UI/Notes
 
-var _music_path = "res://assets/audios/test.wav"
 var _music_stream: AudioStreamWAV
 
-var _name: String:
-	get:
-		var parts = _music_path.split("/")
-		return parts[parts.size()-1]
+var _name: String = "test.wav"
 
 
 func _ready() -> void:
@@ -22,9 +18,22 @@ func _ready() -> void:
 
 
 func _on_file_picker_selected(path: String) -> void:
-	print("file:", path)
-	_music_path = path
-	_music_stream = AudioStreamWAV.load_from_file(path)
+	var game_file = GameFile.new()
+	var level = game_file.load_file(path)
+	
+	if level["success"]:
+		# selected a level zip file
+		_name = level["music_name"]
+		# title
+		for note in level["notes"]:
+			ui_notes.add_note(note)
+		_music_stream = AudioStreamWAV.load_from_buffer(level["music_data"])
+	else:
+		# probably a wav file
+		var parts = path.split("/")
+		_name = parts[parts.size()-1]
+		_music_stream = AudioStreamWAV.load_from_file(path)
+	
 	player.set_audio(_music_stream)
 	ui_title.text = "Currently editing: " + _name
 	ui_notes.update_size()
@@ -60,11 +69,14 @@ func _on_seek_forward() -> void:
 
 
 func _on_save() -> void:
+	_music_stream.save_to_wav("user://tmp.wav")
+	var music_data = FileAccess.get_file_as_bytes("user://tmp.wav")
+	
 	var level = {
 		"title": _name,
-		"notes": [],
+		"notes": ui_notes.notes,
 		"music_name": _name,
-		"music_data": _music_stream.data
+		"music_data": music_data
 	}
 	
 	var game_file = GameFile.new()
