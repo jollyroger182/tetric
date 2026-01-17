@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvdkomr3gclf6"]
+
+[ext_resource type="Script" uid="uid://bijc4w23fjjde" path="res://scenes/level_editor/editor_note.gd" id="1_kechf"]
+
+[node name="EditorNote" type="ColorRect"]
+offset_right = 20.0
+offset_bottom = 120.0
+script = ExtResource("1_kechf")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

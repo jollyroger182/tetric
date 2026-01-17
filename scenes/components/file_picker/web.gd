@@ -1,5 +1,7 @@
 extends Node2D
 
+@export var filter = ".wav,.wave"
+
 @onready var ui = $CanvasLayer
 
 var _input_change_cb = JavaScriptBridge.create_callback(_on_input_change)
@@ -16,6 +18,7 @@ func pick():
 	var document = JavaScriptBridge.get_interface("document")
 	var input = document.createElement("input")
 	input.type = 'file'
+	input.accept = filter
 	input.onchange = _input_change_cb
 	input.click()
 

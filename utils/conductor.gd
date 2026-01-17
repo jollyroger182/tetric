@@ -6,9 +6,16 @@ var playback_pos: float  # seconds
 
 
 func _ready() -> void:
+	if audio:
+		set_audio(audio)
+
+
+func set_audio(new_audio: AudioStream):
+	audio = new_audio
+	
 	stream = AudioStreamSynchronized.new()
 	stream.stream_count = 1
-	stream.set_sync_stream(0, audio)
+	stream.set_sync_stream(0, new_audio)
 	
 	stop()
 
