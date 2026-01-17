@@ -7,11 +7,12 @@ const cell_image = preload("res://assets/images/cell.png")
 
 @onready var cells: Array[Node2D] = [$Cell1, $Cell2, $Cell3, $Cell4]
 @onready var input_handler = $InputHandler
+@onready var gravity = $Gravity
 
 # O, I, S, Z, L, J, T
 var SHAPES: Array[Dictionary] = [
 	_make_shape("O", [-1, -1, -1, 0, 0, -1, 0, 0], Color("#F0F000")),
-	_make_shape("I", [0, -2, 0, -1, 0, 0, 0, 1], Color("#00F0F0")),
+	_make_shape("I", [-2, 0, -1, 0, 0, 0, 1, 0], Color("#00F0F0")),
 	_make_shape("S", [-1, 0, 0, 0, 0, -1, 1, -1], Color("#00F000")),
 	_make_shape("Z", [-1, -1, 0, -1, 0, 0, 1, 0], Color("#F00000")),
 	_make_shape("L", [-1, -2, -1, -1, -1, 0, 0, 0], Color("#F0A000")),
@@ -34,7 +35,11 @@ var has_landed := false
 signal landed(piece: Tetromino)
 
 
-func _ready() -> void:
+func _enter_tree() -> void:
+	$Gravity.conductor = board.conductor
+
+
+func _init() -> void:
 	var shape = SHAPES[randi_range(0, SHAPES.size()-1)]
 	offsets.assign(shape["tiles"])
 	modulate = shape["color"]
@@ -42,6 +47,9 @@ func _ready() -> void:
 	for i in range(4):
 		min_y = min(min_y, offsets[i].y)
 	offset.y = -min_y
+
+
+func _ready():
 	update_position()
 
 

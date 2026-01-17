@@ -21,7 +21,7 @@ script = ExtResource("1_klgdb")
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
-offset_top = 20.0
+offset_top = 50.0
 
 [node name="GameTitle" type="Label" parent="TitleContainer"]
 layout_mode = 2

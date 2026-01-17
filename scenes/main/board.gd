@@ -4,7 +4,17 @@ class_name Board
 const Tetromino = preload("res://scenes/components/tetromino/tetromino.tscn")
 const Cell = preload("res://scenes/components/tetromino/cell.tscn")
 
+@export var conductor: Conductor
+@export var scorekeeper: Scorekeeper
+
+signal game_over
+
 var filled_tiles: Dictionary = {}
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	position = Vector2(40, 40)
 
 
 func _draw():
@@ -14,17 +24,6 @@ func _draw():
 	var rect = Rect2(-5, -5, width, height)
 	
 	draw_rect(rect, Color.WHITE, false, 2)
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	position.x = 20
-	position.y = \
-		get_viewport().get_visible_rect().size.y \
-		- Constants.BOARD_SIZE.y \
-		* Constants.SIZE \
-		- 20
-	print(position.x)
 
 
 func _add_filled_tile(location: Vector2i, color: Color):
@@ -66,6 +65,9 @@ func _check_filled_rows():
 			filled_tiles.erase(offset)
 			
 	if not cleared_rows.is_empty():
+		var num_cleared_rows = cleared_rows.size()
+		scorekeeper.cleared_rows(num_cleared_rows)
+		
 		var new_filled_tiles := {}
 		# calculate how much each row needs to shift
 		var last_shift = 0
@@ -89,7 +91,10 @@ func spawn_piece():
 	tetromino.board = self
 	tetromino.name = "ActivePiece"
 	tetromino.landed.connect(_on_piece_landed)
-	tetromino.offset = Vector2i(Constants.BOARD_SIZE.x/2-1, 0)
+	tetromino.offset.x = Constants.BOARD_SIZE.x/2-1
+	if not can_place(tetromino.offset, tetromino.offsets):
+		game_over.emit()
+		return
 	add_child(tetromino)
 
 

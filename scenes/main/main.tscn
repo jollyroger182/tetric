@@ -1,17 +1,33 @@
-[gd_scene load_steps=5 format=3 uid="uid://cuftekcatbj70"]
+[gd_scene load_steps=8 format=3 uid="uid://cuftekcatbj70"]
 
 [ext_resource type="Script" uid="uid://dl2aask6rqgmy" path="res://scenes/main/board.gd" id="1_hyk8p"]
 [ext_resource type="Script" uid="uid://c5ssj84mmqqk0" path="res://scenes/main/main.gd" id="1_iuonh"]
 [ext_resource type="PackedScene" uid="uid://cvv8knlqearhw" path="res://scenes/pause_menu/pause_menu.tscn" id="3_k2fmo"]
 [ext_resource type="Script" uid="uid://ncieqt2bdoth" path="res://scenes/main/pause_manager.gd" id="4_l3cfh"]
+[ext_resource type="LabelSettings" uid="uid://clr50aytr5vav" path="res://scenes/main/section_heading_label.tres" id="4_ow5a4"]
+[ext_resource type="Script" uid="uid://cfymfv4422fwj" path="res://utils/conductor.gd" id="5_6q06x"]
+[ext_resource type="Script" uid="uid://cl65k7l5mwmam" path="res://scenes/main/scorekeeper.gd" id="7_hujxm"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_iuonh")
 
-[node name="Board" type="Node2D" parent="."]
+[node name="Board" type="Node2D" parent="." node_paths=PackedStringArray("conductor", "scorekeeper")]
 script = ExtResource("1_hyk8p")
+conductor = NodePath("../Conductor")
+scorekeeper = NodePath("../Scorekeeper")
+
+[node name="PauseManager" type="Node" parent="."]
+process_mode = 3
+script = ExtResource("4_l3cfh")
+
+[node name="Conductor" type="AudioStreamPlayer" parent="."]
+script = ExtResource("5_6q06x")
+
+[node name="Scorekeeper" type="Node" parent="."]
+script = ExtResource("7_hujxm")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 1000
 
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("3_k2fmo")]
 unique_name_in_owner = true
@@ -19,15 +35,147 @@ visible = false
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="ScoreLabel" type="Label" parent="UI"]
-offset_left = 20.0
-offset_top = 20.0
-offset_right = 81.0
-offset_bottom = 43.0
-text = "Score: 0"
+[node name="ScorePanel" type="Panel" parent="UI"]
+offset_left = 380.0
+offset_top = 35.0
+offset_right = 580.0
+offset_bottom = 685.0
 
-[node name="PauseManager" type="Node" parent="."]
-process_mode = 3
-script = ExtResource("4_l3cfh")
+[node name="PlayingStaticLabel" type="Label" parent="UI/ScorePanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+grow_horizontal = 2
+text = "NOW PLAYING"
+label_settings = ExtResource("4_ow5a4")
+horizontal_alignment = 1
 
+[node name="PlayingLabel" type="Label" parent="UI/ScorePanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_left = 10.0
+offset_top = 50.0
+offset_right = -10.0
+grow_horizontal = 2
+text = "Your Mom"
+horizontal_alignment = 1
+
+[node name="ScoreStaticLabel" type="Label" parent="UI/ScorePanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -90.0
+offset_top = 100.0
+grow_horizontal = 2
+text = "Score"
+label_settings = ExtResource("4_ow5a4")
+horizontal_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="UI/ScorePanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -90.0
+offset_top = 140.0
+grow_horizontal = 2
+text = "0"
+horizontal_alignment = 1
+
+[node name="TotalStaticLabel" type="Label" parent="UI/ScorePanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_top = 100.0
+offset_right = 90.0
+grow_horizontal = 2
+text = "Total"
+label_settings = ExtResource("4_ow5a4")
+horizontal_alignment = 1
+
+[node name="TotalLabel" type="Label" parent="UI/ScorePanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_top = 140.0
+offset_right = 90.0
+grow_horizontal = 2
+text = "0"
+horizontal_alignment = 1
+
+[node name="HitsStaticLabel" type="Label" parent="UI/ScorePanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -90.0
+offset_top = 180.0
+grow_horizontal = 2
+text = "Hits"
+label_settings = ExtResource("4_ow5a4")
+horizontal_alignment = 1
+
+[node name="HitsLabel" type="Label" parent="UI/ScorePanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -90.0
+offset_top = 220.0
+grow_horizontal = 2
+text = "0"
+horizontal_alignment = 1
+
+[node name="MissesStaticLabel" type="Label" parent="UI/ScorePanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_top = 180.0
+offset_right = 90.0
+grow_horizontal = 2
+text = "Misses"
+label_settings = ExtResource("4_ow5a4")
+horizontal_alignment = 1
+
+[node name="MissesLabel" type="Label" parent="UI/ScorePanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_top = 220.0
+offset_right = 90.0
+grow_horizontal = 2
+text = "0"
+horizontal_alignment = 1
+
+[node name="NextStaticLabel" type="Label" parent="UI/ScorePanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_left = 19.0
+offset_top = 270.0
+offset_right = -10.0
+offset_bottom = 304.0
+grow_horizontal = 2
+text = "UP NEXT"
+label_settings = ExtResource("4_ow5a4")
+horizontal_alignment = 1
+
+[node name="Next" type="Control" parent="UI/ScorePanel"]
+layout_mode = 1
+anchor_right = 1.0
+offset_top = 320.0
+offset_bottom = 520.0
+grow_horizontal = 2
+
+[connection signal="game_over" from="Board" to="." method="_on_game_over"]
+[connection signal="changed" from="Scorekeeper" to="." method="_on_score_changed"]
 [connection signal="resume" from="CanvasLayer/PauseMenu" to="." method="_on_resume"]

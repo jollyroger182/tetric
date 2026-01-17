@@ -1,4 +1,5 @@
 extends AudioStreamPlayer
+class_name Conductor
 
 @export var audio: AudioStream
 
