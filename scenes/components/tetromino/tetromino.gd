@@ -9,16 +9,7 @@ const cell_image = preload("res://assets/images/cell.png")
 @onready var input_handler = $InputHandler
 @onready var gravity = $Gravity
 
-# O, I, S, Z, L, J, T
-var SHAPES: Array[Dictionary] = [
-	_make_shape("O", [-1, -1, -1, 0, 0, -1, 0, 0], Color("#F0F000")),
-	_make_shape("I", [-2, 0, -1, 0, 0, 0, 1, 0], Color("#00F0F0")),
-	_make_shape("S", [-1, 0, 0, 0, 0, -1, 1, -1], Color("#00F000")),
-	_make_shape("Z", [-1, -1, 0, -1, 0, 0, 1, 0], Color("#F00000")),
-	_make_shape("L", [-1, -2, -1, -1, -1, 0, 0, 0], Color("#F0A000")),
-	_make_shape("J", [0, -2, 0, -1, 0, 0, -1, 0], Color("#0000F0")),
-	_make_shape("T", [-1, -1, 0, -1, 0, 0, 1, -1], Color("#A000F0")),
-]
+var shape
 
 var offsets: Array[Vector2i] = [
 	Vector2i(0, 0),
@@ -35,29 +26,37 @@ var has_landed := false
 signal landed(piece: Tetromino)
 
 
-func _enter_tree() -> void:
-	$Gravity.conductor = board.conductor
-
-
-func _init() -> void:
-	var shape = SHAPES[randi_range(0, SHAPES.size()-1)]
+func _ready() -> void:
+	shape = shape if shape else Randomizer.get_piece()
 	offsets.assign(shape["tiles"])
 	modulate = shape["color"]
-	var min_y = 0
-	for i in range(4):
-		min_y = min(min_y, offsets[i].y)
-	offset.y = -min_y
-
-
-func _ready():
-	update_position()
-
-
-func update_position():
+	if board:
+		# i'm on a board, enable falling and stuff
+		#var min_y = 0
+		#for i in range(4):
+			#min_y = min(min_y, offsets[i].y)
+		#offset.y = -min_y
+		offset.x += shape["center"].x
+		$Gravity.conductor = board.conductor
+		update_position()
+	else:
+		# i'm just a static piece
+		set_process(false)
+		$Gravity.set_process(false)
+		$InputHandler.set_process(false)
+	
 	for i in range(4):
 		cells[i].position = offsets[i] * Constants.SIZE
 		cells[i].scale.x = 1.0 * Constants.SIZE / cell_image.get_width()
 		cells[i].scale.y = 1.0 * Constants.SIZE / cell_image.get_height()
+
+
+func _process(_delta: float):
+	if not board.can_place(offset, offsets):
+		landed.emit(self)
+
+
+func update_position():
 	position = offset * Constants.SIZE
 
 
@@ -76,7 +75,8 @@ func try_move(direction: Vector2i):
 func try_rotate(ccw: bool):
 	var new_piece: Array[Vector2i] = []
 	for tile in offsets:
-		var new_tile = Vector2i(tile.y, -tile.x) * (-1 if ccw else 1)
+		var recentered = tile - shape["center"]
+		var new_tile = Vector2i(recentered.y, -recentered.x) * (-1 if ccw else 1) + shape["center"]
 		new_piece.append(new_tile)
 	if board.can_place(offset, new_piece):
 		offsets.assign(new_piece)
@@ -86,10 +86,3 @@ func try_rotate(ccw: bool):
 func hard_drop():
 	while try_move(Vector2i.DOWN):
 		pass
-
-
-func _make_shape(name: String, offsets: Array[int], color: Color):
-	var tiles = []
-	for i in range(4):
-		tiles.append(Vector2i(offsets[i*2], offsets[i*2+1]))
-	return { "name": name, "tiles": tiles, "color": color }

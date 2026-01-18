@@ -12,8 +12,9 @@ const GameFile = preload("res://utils/game_file.gd")
 @onready var total_label = $UI/ScorePanel/TotalLabel
 @onready var hits_label = $UI/ScorePanel/HitsLabel
 @onready var misses_label = $UI/ScorePanel/MissesLabel
+@onready var up_next = $UI/ScorePanel/Next
 
-var level
+var level: Dictionary
 
 
 func _ready() -> void:
@@ -32,6 +33,7 @@ func _ready() -> void:
 	
 	playing_label.text = level["title"]
 	
+	Randomizer.reset()
 	board.spawn_piece()
 
 
@@ -46,3 +48,7 @@ func _on_score_changed(_old: int, new: int) -> void:
 func _on_game_over() -> void:
 	print("game over")
 	get_tree().change_scene_to_file("res://scenes/menu/menu.tscn")
+
+
+func _on_piece_spawned(piece: Tetromino) -> void:
+	up_next.update()

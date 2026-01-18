@@ -7,6 +7,7 @@ const Cell = preload("res://scenes/components/tetromino/cell.tscn")
 @export var conductor: Conductor
 @export var scorekeeper: Scorekeeper
 
+signal piece_spawned(piece: Tetromino)
 signal game_over
 
 var filled_tiles: Dictionary = {}
@@ -39,6 +40,9 @@ func _add_filled_tile(location: Vector2i, color: Color):
 
 
 func _on_piece_landed(piece: Tetromino):
+	if not can_place(piece.offset, piece.offsets):
+		game_over.emit()
+		return
 	for tile in piece.offsets:
 		_add_filled_tile(piece.offset + tile, piece.modulate)
 	piece.queue_free()
@@ -92,10 +96,8 @@ func spawn_piece():
 	tetromino.name = "ActivePiece"
 	tetromino.landed.connect(_on_piece_landed)
 	tetromino.offset.x = Constants.BOARD_SIZE.x/2-1
-	if not can_place(tetromino.offset, tetromino.offsets):
-		game_over.emit()
-		return
 	add_child(tetromino)
+	piece_spawned.emit(tetromino)
 
 
 func can_place(offset: Vector2i, piece: Array[Vector2i]) -> bool:
