@@ -6,6 +6,7 @@ const Cell = preload("res://scenes/components/tetromino/cell.tscn")
 
 @export var conductor: Conductor
 @export var scorekeeper: Scorekeeper
+@export var rhythm: Rhythm
 
 signal piece_spawned(piece: Tetromino)
 signal game_over
@@ -93,6 +94,7 @@ func _check_filled_rows():
 func spawn_piece():
 	var tetromino: Tetromino = Tetromino.instantiate()
 	tetromino.board = self
+	tetromino.rhythm = rhythm
 	tetromino.name = "ActivePiece"
 	tetromino.landed.connect(_on_piece_landed)
 	tetromino.offset.x = Constants.BOARD_SIZE.x/2-1

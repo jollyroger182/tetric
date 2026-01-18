@@ -2,6 +2,7 @@ extends Node2D
 class_name Tetromino
 
 @export var board: Board
+@export var rhythm: Rhythm
 
 const cell_image = preload("res://assets/images/cell.png")
 
@@ -32,23 +33,16 @@ func _ready() -> void:
 	modulate = shape["color"]
 	if board:
 		# i'm on a board, enable falling and stuff
-		#var min_y = 0
-		#for i in range(4):
-			#min_y = min(min_y, offsets[i].y)
-		#offset.y = -min_y
 		offset.x += shape["center"].x
 		$Gravity.conductor = board.conductor
+		$InputHandler.rhythm = rhythm
 		update_position()
 	else:
 		# i'm just a static piece
 		set_process(false)
 		$Gravity.set_process(false)
 		$InputHandler.set_process(false)
-	
-	for i in range(4):
-		cells[i].position = offsets[i] * Constants.SIZE
-		cells[i].scale.x = 1.0 * Constants.SIZE / cell_image.get_width()
-		cells[i].scale.y = 1.0 * Constants.SIZE / cell_image.get_height()
+	update_cell_positions()
 
 
 func _process(_delta: float):
@@ -58,6 +52,13 @@ func _process(_delta: float):
 
 func update_position():
 	position = offset * Constants.SIZE
+
+
+func update_cell_positions():
+	for i in range(4):
+		cells[i].position = offsets[i] * Constants.SIZE
+		cells[i].scale.x = 1.0 * Constants.SIZE / cell_image.get_width()
+		cells[i].scale.y = 1.0 * Constants.SIZE / cell_image.get_height()
 
 
 func try_move(direction: Vector2i):
@@ -78,9 +79,10 @@ func try_rotate(ccw: bool):
 		var recentered = tile - shape["center"]
 		var new_tile = Vector2i(recentered.y, -recentered.x) * (-1 if ccw else 1) + shape["center"]
 		new_piece.append(new_tile)
+	print(new_piece)
 	if board.can_place(offset, new_piece):
 		offsets.assign(new_piece)
-		update_position()
+		update_cell_positions()
 
 
 func hard_drop():

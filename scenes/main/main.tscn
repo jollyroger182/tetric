@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://cuftekcatbj70"]
+[gd_scene load_steps=10 format=3 uid="uid://cuftekcatbj70"]
 
 [ext_resource type="Script" uid="uid://dl2aask6rqgmy" path="res://scenes/main/board.gd" id="1_hyk8p"]
 [ext_resource type="Script" uid="uid://c5ssj84mmqqk0" path="res://scenes/main/main.gd" id="1_iuonh"]
+[ext_resource type="Script" uid="uid://o7jmuxpr56yq" path="res://scenes/main/rhythm.gd" id="3_b1x3f"]
 [ext_resource type="PackedScene" uid="uid://cvv8knlqearhw" path="res://scenes/pause_menu/pause_menu.tscn" id="3_k2fmo"]
 [ext_resource type="Script" uid="uid://ncieqt2bdoth" path="res://scenes/main/pause_manager.gd" id="4_l3cfh"]
 [ext_resource type="LabelSettings" uid="uid://clr50aytr5vav" path="res://scenes/main/section_heading_label.tres" id="4_ow5a4"]
@@ -12,13 +13,17 @@
 [node name="Main" type="Node2D"]
 script = ExtResource("1_iuonh")
 
-[node name="Board" type="Node2D" parent="." node_paths=PackedStringArray("conductor", "scorekeeper")]
+[node name="Board" type="Node2D" parent="." node_paths=PackedStringArray("conductor", "scorekeeper", "rhythm")]
 script = ExtResource("1_hyk8p")
 conductor = NodePath("../Conductor")
 scorekeeper = NodePath("../Scorekeeper")
+rhythm = NodePath("../Rhythm")
 
-[node name="Rhythm" type="Node2D" parent="."]
-position = Vector2(600, 0)
+[node name="Rhythm" type="Node2D" parent="." node_paths=PackedStringArray("conductor")]
+clip_children = 1
+position = Vector2(920, 360)
+script = ExtResource("3_b1x3f")
+conductor = NodePath("../Conductor")
 
 [node name="PauseManager" type="Node" parent="."]
 process_mode = 3

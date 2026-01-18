@@ -3,6 +3,7 @@ extends Node2D
 const GameFile = preload("res://utils/game_file.gd")
 
 @onready var board: Board = $Board
+@onready var rhythm = $Rhythm
 @onready var pause_manager = $PauseManager
 @onready var conductor = $Conductor
 @onready var scorekeeper = $Scorekeeper
@@ -35,6 +36,8 @@ func _ready() -> void:
 	
 	Randomizer.reset()
 	board.spawn_piece()
+	
+	rhythm.load_level(level)
 
 
 func _on_resume() -> void:
