@@ -2,8 +2,10 @@ extends Node
 class_name Scorekeeper
 
 var score: int = 0
+var hits: int = 0
+var misses: int = 0
 
-signal changed(old: int, new: int)
+signal changed
 
 
 func cleared_rows(number: int):
@@ -12,9 +14,14 @@ func cleared_rows(number: int):
 
 
 func hit_note():
+	hits += 1
 	change_score(10)
+
+
+func miss_note():
+	misses += 1
 
 
 func change_score(delta: int):
 	score += delta
-	changed.emit(score - delta, score)
+	changed.emit()

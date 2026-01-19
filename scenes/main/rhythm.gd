@@ -10,25 +10,15 @@ const RhythmNote = preload("res://scenes/components/rhythm_note/RhythmNote.tscn"
 
 var notes: Array[Node2D] = []
 
-var hits = 0
-var misses = 0
-
-
-signal update(data: Dictionary)
-
 
 func _draw():
 	draw_rect(Rect2(-325, -325, 650, 650), Color.WHITE, false)
+	draw_circle(Vector2.ZERO, 50, Color.CYAN, false, 5, true)
 
 
 func _on_note_expired(note: Node2D):
 	delete_note(note)
-	misses += 1
-	_update()
-
-
-func _update():
-	update.emit({ "hits": hits, "misses": misses })
+	scorekeeper.miss_note()
 
 
 func delete_note(note: Node2D):
@@ -54,8 +44,6 @@ func validate_input():
 	var note = notes[0]
 	if abs(note.time - conductor.playback_pos) < Constants.MISS_THRESH:
 		delete_note(note)
-		hits += 1
 		scorekeeper.hit_note()
-		_update()
 		return true
 	return false

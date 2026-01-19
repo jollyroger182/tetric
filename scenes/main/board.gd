@@ -41,12 +41,12 @@ func _add_filled_tile(location: Vector2i, color: Color):
 
 
 func _on_piece_landed(piece: Tetromino):
+	piece.queue_free()
 	if not can_place(piece.offset, piece.offsets):
 		game_over.emit()
 		return
 	for tile in piece.offsets:
 		_add_filled_tile(piece.offset + tile, piece.modulate)
-	piece.queue_free()
 	_check_filled_rows()
 	spawn_piece()
 
