@@ -1,68 +1,86 @@
-[gd_scene load_steps=4 format=3 uid="uid://gjf3hyl7gscq"]
+[gd_scene load_steps=8 format=3 uid="uid://gjf3hyl7gscq"]
 
+[ext_resource type="Theme" uid="uid://d3m46y6fmbccy" path="res://resources/theme_base.tres" id="1_037ec"]
 [ext_resource type="Script" uid="uid://dxtm00owe3q0e" path="res://scenes/menu/menu.gd" id="1_klgdb"]
+[ext_resource type="FontFile" uid="uid://bg5d6vo2gsvqc" path="res://assets/fonts/PressStart2P-Regular.ttf" id="2_e0arn"]
+[ext_resource type="FontFile" uid="uid://5joqatek3cn2" path="res://assets/fonts/Audiowide-Regular.ttf" id="3_037ec"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_1h4yd"]
-font_size = 60
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_037ec"]
+bg_color = Color(0.17131117, 0.071976595, 0.34368917, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_oa53l"]
-font_size = 32
+[sub_resource type="FontVariation" id="FontVariation_y1o0p"]
+base_font = ExtResource("2_e0arn")
+variation_transform = Transform2D(1, 0.2, 0, 1, 0, 0)
+spacing_glyph = 10
 
-[node name="Menu" type="Control"]
-layout_mode = 3
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y1o0p"]
+content_margin_top = 10.0
+
+[node name="Menu" type="Panel"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_037ec")
+theme_override_styles/panel = SubResource("StyleBoxFlat_037ec")
 script = ExtResource("1_klgdb")
 
-[node name="TitleContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-offset_top = 50.0
-
-[node name="GameTitle" type="Label" parent="TitleContainer"]
-layout_mode = 2
-text = "TETRIC"
-label_settings = SubResource("LabelSettings_1h4yd")
-horizontal_alignment = 1
-
-[node name="GameTagline" type="Label" parent="TitleContainer"]
-layout_mode = 2
-text = "like tetris but better (TM)"
-label_settings = SubResource("LabelSettings_oa53l")
-horizontal_alignment = 1
-
-[node name="ButtonsContainer" type="VBoxContainer" parent="."]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 1
-anchors_preset = -1
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+offset_left = -232.5
+offset_top = -210.5
+offset_right = 232.5
+offset_bottom = 210.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 60
+
+[node name="TitleContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="GameTitle" type="Label" parent="VBoxContainer/TitleContainer"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_y1o0p")
+theme_override_font_sizes/font_size = 60
+text = "TETRIC"
+horizontal_alignment = 1
+
+[node name="GameTagline" type="Label" parent="VBoxContainer/TitleContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_037ec")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxEmpty_y1o0p")
+text = "like tetris but better (TM)"
+horizontal_alignment = 1
+
+[node name="ButtonsContainer" type="VBoxContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="PlayButton" type="Button" parent="ButtonsContainer"]
+[node name="PlayButton" type="Button" parent="VBoxContainer/ButtonsContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Play"
 
-[node name="EditorButton" type="Button" parent="ButtonsContainer"]
+[node name="EditorButton" type="Button" parent="VBoxContainer/ButtonsContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Level Editor"
 
-[node name="QuitButton" type="Button" parent="ButtonsContainer"]
+[node name="QuitButton" type="Button" parent="VBoxContainer/ButtonsContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Quit"
 
-[connection signal="pressed" from="ButtonsContainer/PlayButton" to="." method="_on_play"]
-[connection signal="pressed" from="ButtonsContainer/EditorButton" to="." method="_on_level_editor"]
-[connection signal="pressed" from="ButtonsContainer/QuitButton" to="." method="_on_quit"]
+[connection signal="pressed" from="VBoxContainer/ButtonsContainer/PlayButton" to="." method="_on_play"]
+[connection signal="pressed" from="VBoxContainer/ButtonsContainer/EditorButton" to="." method="_on_level_editor"]
+[connection signal="pressed" from="VBoxContainer/ButtonsContainer/QuitButton" to="." method="_on_quit"]
