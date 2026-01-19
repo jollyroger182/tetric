@@ -53,5 +53,13 @@ func _on_game_over() -> void:
 	get_tree().change_scene_to_file("res://scenes/menu/menu.tscn")
 
 
-func _on_piece_spawned(piece: Tetromino) -> void:
+func _on_piece_spawned(_piece: Tetromino) -> void:
 	up_next.update()
+
+
+func _on_rhythm_update(data: Dictionary) -> void:
+	var hits = data["hits"]
+	var misses = data["misses"]
+	total_label.text = str(hits + misses)
+	hits_label.text = str(hits)
+	misses_label.text = str(misses)

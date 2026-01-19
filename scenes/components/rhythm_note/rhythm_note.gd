@@ -10,7 +10,7 @@ signal expired(note: Node2D)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	if conductor.playback_pos > time:
+	if conductor.playback_pos > time + Constants.MISS_THRESH:
 		if not _is_expired:
 			expired.emit(self)
 			_is_expired = true

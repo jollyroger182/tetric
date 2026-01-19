@@ -15,6 +15,9 @@ var SHAPES: Array[Dictionary] = [
 	_make_shape("T", [1, 0, 0, 1, 1, 1, 2, 1], [1, 1], Color("#A000F0")),
 ]
 
+const MISS_THRESH = 0.2
+const PERFECT_THRESH = 0.1
+
 
 func _make_shape(name: String, offsets: Array[int], center: Array[int], color: Color):
 	var tiles = []

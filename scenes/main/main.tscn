@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://cuftekcatbj70"]
+[gd_scene load_steps=11 format=3 uid="uid://cuftekcatbj70"]
 
 [ext_resource type="Script" uid="uid://dl2aask6rqgmy" path="res://scenes/main/board.gd" id="1_hyk8p"]
 [ext_resource type="Script" uid="uid://c5ssj84mmqqk0" path="res://scenes/main/main.gd" id="1_iuonh"]
 [ext_resource type="Script" uid="uid://o7jmuxpr56yq" path="res://scenes/main/rhythm.gd" id="3_b1x3f"]
 [ext_resource type="PackedScene" uid="uid://cvv8knlqearhw" path="res://scenes/pause_menu/pause_menu.tscn" id="3_k2fmo"]
+[ext_resource type="Script" uid="uid://cc4r8bnlwohyw" path="res://scenes/main/notes_container.gd" id="4_a8run"]
 [ext_resource type="Script" uid="uid://ncieqt2bdoth" path="res://scenes/main/pause_manager.gd" id="4_l3cfh"]
 [ext_resource type="LabelSettings" uid="uid://clr50aytr5vav" path="res://scenes/main/section_heading_label.tres" id="4_ow5a4"]
 [ext_resource type="Script" uid="uid://cfymfv4422fwj" path="res://utils/conductor.gd" id="5_6q06x"]
@@ -19,11 +20,15 @@ conductor = NodePath("../Conductor")
 scorekeeper = NodePath("../Scorekeeper")
 rhythm = NodePath("../Rhythm")
 
-[node name="Rhythm" type="Node2D" parent="." node_paths=PackedStringArray("conductor")]
-clip_children = 1
+[node name="Rhythm" type="Node2D" parent="." node_paths=PackedStringArray("conductor", "scorekeeper")]
 position = Vector2(920, 360)
 script = ExtResource("3_b1x3f")
 conductor = NodePath("../Conductor")
+scorekeeper = NodePath("../Scorekeeper")
+
+[node name="Notes" type="Node2D" parent="Rhythm"]
+clip_children = 1
+script = ExtResource("4_a8run")
 
 [node name="PauseManager" type="Node" parent="."]
 process_mode = 3
@@ -180,6 +185,7 @@ horizontal_alignment = 1
 
 [node name="Next" type="Control" parent="UI/ScorePanel"]
 layout_mode = 1
+anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -80.0
@@ -191,5 +197,6 @@ script = ExtResource("8_yyfjg")
 
 [connection signal="game_over" from="Board" to="." method="_on_game_over"]
 [connection signal="piece_spawned" from="Board" to="." method="_on_piece_spawned"]
+[connection signal="update" from="Rhythm" to="." method="_on_rhythm_update"]
 [connection signal="changed" from="Scorekeeper" to="." method="_on_score_changed"]
 [connection signal="resume" from="CanvasLayer/PauseMenu" to="." method="_on_resume"]

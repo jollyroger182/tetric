@@ -11,6 +11,10 @@ func cleared_rows(number: int):
 	change_score(delta)
 
 
+func hit_note():
+	change_score(10)
+
+
 func change_score(delta: int):
 	score += delta
 	changed.emit(score - delta, score)
