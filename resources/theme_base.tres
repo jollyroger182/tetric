@@ -1,16 +1,20 @@
-[gd_resource type="Theme" load_steps=4 format=3 uid="uid://d3m46y6fmbccy"]
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://d3m46y6fmbccy"]
 
 [ext_resource type="Texture2D" uid="uid://b5amt2py0j1na" path="res://assets/images/button_outline.png" id="1_67ehd"]
+[ext_resource type="Texture2D" uid="uid://dpfg71klt66ud" path="res://assets/images/button_hover.png" id="1_vkeru"]
 
 [sub_resource type="FontVariation" id="FontVariation_klgdb"]
 variation_embolden = 0.5
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vn4yu"]
+texture = ExtResource("1_vkeru")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vkeru"]
 texture = ExtResource("1_67ehd")
 
 [resource]
 Button/colors/font_color = Color(0.46666667, 1, 1, 1)
-Button/colors/font_hover_color = Color(0.2, 0.2, 0.2, 1)
 Button/fonts/font = SubResource("FontVariation_klgdb")
+Button/styles/hover = SubResource("StyleBoxTexture_vn4yu")
 Button/styles/normal = SubResource("StyleBoxTexture_vkeru")
 Label/colors/font_color = Color(0.46666667, 1, 1, 1)

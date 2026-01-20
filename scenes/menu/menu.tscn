@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://gjf3hyl7gscq"]
+[gd_scene load_steps=10 format=3 uid="uid://gjf3hyl7gscq"]
 
 [ext_resource type="Theme" uid="uid://d3m46y6fmbccy" path="res://resources/theme_base.tres" id="1_037ec"]
 [ext_resource type="Script" uid="uid://dxtm00owe3q0e" path="res://scenes/menu/menu.gd" id="1_klgdb"]
 [ext_resource type="FontFile" uid="uid://bg5d6vo2gsvqc" path="res://assets/fonts/PressStart2P-Regular.ttf" id="2_e0arn"]
 [ext_resource type="FontFile" uid="uid://5joqatek3cn2" path="res://assets/fonts/Audiowide-Regular.ttf" id="3_037ec"]
 [ext_resource type="AudioStream" uid="uid://c1cw0ulmyvd6x" path="res://assets/audios/menu.wav" id="5_y1o0p"]
+[ext_resource type="Script" uid="uid://ke8vda81p2fg" path="res://utils/sfx_manager.gd" id="7_3y2rt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_037ec"]
 bg_color = Color(0.17131117, 0.071976595, 0.34368917, 1)
@@ -29,15 +30,11 @@ script = ExtResource("1_klgdb")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -232.5
-offset_top = -210.5
-offset_right = 232.5
-offset_bottom = 210.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 60
@@ -64,7 +61,7 @@ horizontal_alignment = 1
 [node name="ButtonsContainer" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_constants/separation = 16
+theme_override_constants/separation = 24
 alignment = 1
 
 [node name="PlayButton" type="Button" parent="VBoxContainer/ButtonsContainer"]
@@ -82,10 +79,17 @@ custom_minimum_size = Vector2(180, 60)
 layout_mode = 2
 text = "Quit"
 
-[node name="BGMPlayer" type="AudioStreamPlayer" parent="."]
+[node name="BGM" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_y1o0p")
 autoplay = true
 
+[node name="SFX" type="AudioStreamPlayer" parent="."]
+volume_db = -5.0
+script = ExtResource("7_3y2rt")
+
+[connection signal="mouse_entered" from="VBoxContainer/ButtonsContainer/PlayButton" to="." method="_on_mouse_entered_button"]
 [connection signal="pressed" from="VBoxContainer/ButtonsContainer/PlayButton" to="." method="_on_play"]
+[connection signal="mouse_entered" from="VBoxContainer/ButtonsContainer/EditorButton" to="." method="_on_mouse_entered_button"]
 [connection signal="pressed" from="VBoxContainer/ButtonsContainer/EditorButton" to="." method="_on_level_editor"]
+[connection signal="mouse_entered" from="VBoxContainer/ButtonsContainer/QuitButton" to="." method="_on_mouse_entered_button"]
 [connection signal="pressed" from="VBoxContainer/ButtonsContainer/QuitButton" to="." method="_on_quit"]
