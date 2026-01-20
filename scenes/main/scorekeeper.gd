@@ -20,6 +20,7 @@ func hit_note():
 
 func miss_note():
 	misses += 1
+	changed.emit()
 
 
 func change_score(delta: int):

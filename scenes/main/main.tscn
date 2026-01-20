@@ -6,21 +6,23 @@
 [ext_resource type="PackedScene" uid="uid://cvv8knlqearhw" path="res://scenes/pause_menu/pause_menu.tscn" id="3_k2fmo"]
 [ext_resource type="Script" uid="uid://cc4r8bnlwohyw" path="res://scenes/main/notes_container.gd" id="4_a8run"]
 [ext_resource type="Script" uid="uid://ncieqt2bdoth" path="res://scenes/main/pause_manager.gd" id="4_l3cfh"]
-[ext_resource type="LabelSettings" uid="uid://clr50aytr5vav" path="res://scenes/main/section_heading_label.tres" id="4_ow5a4"]
 [ext_resource type="Script" uid="uid://cfymfv4422fwj" path="res://utils/conductor.gd" id="5_6q06x"]
 [ext_resource type="Script" uid="uid://cl65k7l5mwmam" path="res://scenes/main/scorekeeper.gd" id="7_hujxm"]
 [ext_resource type="Script" uid="uid://ddg22ujroaa3d" path="res://scenes/main/up_next.gd" id="8_yyfjg"]
-[ext_resource type="LabelSettings" uid="uid://cbjhp4ff6l27j" path="res://scenes/main/stats_value_name.tres" id="11_blune"]
-[ext_resource type="LabelSettings" uid="uid://dcup17urgeslb" path="res://scenes/main/stats_value_value.tres" id="12_th5th"]
+[ext_resource type="Theme" uid="uid://d3m46y6fmbccy" path="res://resources/theme_base.tres" id="9_th5th"]
+[ext_resource type="LabelSettings" uid="uid://cusqa6qxfwtdf" path="res://resources/label_settings_section_heading.tres" id="10_th5th"]
+[ext_resource type="LabelSettings" uid="uid://cm32281ckbiq1" path="res://resources/label_settings_heading.tres" id="12_7smn1"]
+[ext_resource type="LabelSettings" uid="uid://cmhq53knjfnbd" path="res://resources/label_settings_subheading.tres" id="13_th5th"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_a8run"]
-font_size = 70
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_th5th"]
+bg_color = Color(0.10349987, 0.04200191, 0.2134768, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_blune"]
-font_size = 50
-
-[sub_resource type="LabelSettings" id="LabelSettings_th5th"]
-font_size = 30
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7smn1"]
+bg_color = Color(3.970787e-07, 0.25769952, 0.2588898, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_iuonh")
@@ -51,6 +53,18 @@ script = ExtResource("5_6q06x")
 [node name="Scorekeeper" type="Node" parent="."]
 script = ExtResource("7_hujxm")
 
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="Panel" type="Panel" parent="Background"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("9_th5th")
+theme_override_styles/panel = SubResource("StyleBoxFlat_th5th")
+
 [node name="PauseLayer" type="CanvasLayer" parent="."]
 layer = 1000
 
@@ -65,6 +79,8 @@ offset_left = 380.0
 offset_top = 35.0
 offset_right = 580.0
 offset_bottom = 685.0
+theme = ExtResource("9_th5th")
+theme_override_styles/panel = SubResource("StyleBoxFlat_7smn1")
 
 [node name="PlayingStaticLabel" type="Label" parent="UI/ScorePanel"]
 layout_mode = 1
@@ -75,7 +91,7 @@ offset_top = 10.0
 offset_right = -10.0
 grow_horizontal = 2
 text = "NOW PLAYING"
-label_settings = ExtResource("4_ow5a4")
+label_settings = ExtResource("10_th5th")
 horizontal_alignment = 1
 
 [node name="PlayingLabel" type="Label" parent="UI/ScorePanel"]
@@ -98,7 +114,7 @@ offset_left = -90.0
 offset_top = 100.0
 grow_horizontal = 2
 text = "Score"
-label_settings = ExtResource("4_ow5a4")
+label_settings = ExtResource("10_th5th")
 horizontal_alignment = 1
 
 [node name="ScoreLabel" type="Label" parent="UI/ScorePanel"]
@@ -121,7 +137,7 @@ offset_top = 100.0
 offset_right = 90.0
 grow_horizontal = 2
 text = "Total"
-label_settings = ExtResource("4_ow5a4")
+label_settings = ExtResource("10_th5th")
 horizontal_alignment = 1
 
 [node name="TotalLabel" type="Label" parent="UI/ScorePanel"]
@@ -144,7 +160,7 @@ offset_left = -90.0
 offset_top = 180.0
 grow_horizontal = 2
 text = "Hits"
-label_settings = ExtResource("4_ow5a4")
+label_settings = ExtResource("10_th5th")
 horizontal_alignment = 1
 
 [node name="HitsLabel" type="Label" parent="UI/ScorePanel"]
@@ -167,7 +183,7 @@ offset_top = 180.0
 offset_right = 90.0
 grow_horizontal = 2
 text = "Misses"
-label_settings = ExtResource("4_ow5a4")
+label_settings = ExtResource("10_th5th")
 horizontal_alignment = 1
 
 [node name="MissesLabel" type="Label" parent="UI/ScorePanel"]
@@ -185,13 +201,12 @@ horizontal_alignment = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
-offset_left = 19.0
+offset_left = 10.0
 offset_top = 270.0
 offset_right = -10.0
-offset_bottom = 304.0
 grow_horizontal = 2
 text = "UP NEXT"
-label_settings = ExtResource("4_ow5a4")
+label_settings = ExtResource("10_th5th")
 horizontal_alignment = 1
 
 [node name="Next" type="Control" parent="UI/ScorePanel"]
@@ -216,6 +231,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("9_th5th")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScoreLayer/Panel"]
 layout_mode = 1
@@ -233,13 +249,13 @@ theme_override_constants/separation = 20
 [node name="TitleStaticLabel" type="Label" parent="ScoreLayer/Panel/VBoxContainer"]
 layout_mode = 2
 text = "Game Over"
-label_settings = SubResource("LabelSettings_a8run")
+label_settings = ExtResource("12_7smn1")
 horizontal_alignment = 1
 
 [node name="NameLabel" type="Label" parent="ScoreLayer/Panel/VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 32
 text = "Your Mom"
-label_settings = ExtResource("12_th5th")
 horizontal_alignment = 1
 
 [node name="Stats" type="HBoxContainer" parent="ScoreLayer/Panel/VBoxContainer"]
@@ -253,13 +269,13 @@ layout_mode = 2
 [node name="Name" type="Label" parent="ScoreLayer/Panel/VBoxContainer/Stats/Notes"]
 layout_mode = 2
 text = "Notes"
-label_settings = ExtResource("11_blune")
+label_settings = ExtResource("13_th5th")
 horizontal_alignment = 1
 
 [node name="Value" type="Label" parent="ScoreLayer/Panel/VBoxContainer/Stats/Notes"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "0"
-label_settings = ExtResource("12_th5th")
 horizontal_alignment = 1
 
 [node name="Hits" type="VBoxContainer" parent="ScoreLayer/Panel/VBoxContainer/Stats"]
@@ -268,13 +284,13 @@ layout_mode = 2
 [node name="Name" type="Label" parent="ScoreLayer/Panel/VBoxContainer/Stats/Hits"]
 layout_mode = 2
 text = "Hits"
-label_settings = ExtResource("11_blune")
+label_settings = ExtResource("13_th5th")
 horizontal_alignment = 1
 
 [node name="Value" type="Label" parent="ScoreLayer/Panel/VBoxContainer/Stats/Hits"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "0"
-label_settings = ExtResource("12_th5th")
 horizontal_alignment = 1
 
 [node name="Misses" type="VBoxContainer" parent="ScoreLayer/Panel/VBoxContainer/Stats"]
@@ -283,13 +299,13 @@ layout_mode = 2
 [node name="Name" type="Label" parent="ScoreLayer/Panel/VBoxContainer/Stats/Misses"]
 layout_mode = 2
 text = "Misses"
-label_settings = ExtResource("11_blune")
+label_settings = ExtResource("13_th5th")
 horizontal_alignment = 1
 
 [node name="Value" type="Label" parent="ScoreLayer/Panel/VBoxContainer/Stats/Misses"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "0"
-label_settings = ExtResource("12_th5th")
 horizontal_alignment = 1
 
 [node name="Score" type="VBoxContainer" parent="ScoreLayer/Panel/VBoxContainer"]
@@ -298,13 +314,13 @@ layout_mode = 2
 [node name="Name" type="Label" parent="ScoreLayer/Panel/VBoxContainer/Score"]
 layout_mode = 2
 text = "Score"
-label_settings = SubResource("LabelSettings_blune")
+label_settings = ExtResource("12_7smn1")
 horizontal_alignment = 1
 
 [node name="Value" type="Label" parent="ScoreLayer/Panel/VBoxContainer/Score"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 32
 text = "0"
-label_settings = SubResource("LabelSettings_th5th")
 horizontal_alignment = 1
 
 [node name="Buttons" type="HBoxContainer" parent="ScoreLayer/Panel/VBoxContainer"]

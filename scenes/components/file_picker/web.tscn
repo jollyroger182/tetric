@@ -9,6 +9,7 @@ font_size = 32
 script = ExtResource("1_t4yof")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 10000
 visible = false
 
 [node name="Panel" type="Panel" parent="CanvasLayer"]

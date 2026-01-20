@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://cusqa6qxfwtdf"]
+
+[sub_resource type="FontVariation" id="FontVariation_qcmsd"]
+variation_embolden = 0.25
+
+[resource]
+font = SubResource("FontVariation_qcmsd")
+font_size = 24
+font_color = Color(7.508397e-06, 0.84866786, 0.8521077, 1)

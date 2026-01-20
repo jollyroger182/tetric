@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://gjf3hyl7gscq"]
+[gd_scene load_steps=9 format=3 uid="uid://gjf3hyl7gscq"]
 
 [ext_resource type="Theme" uid="uid://d3m46y6fmbccy" path="res://resources/theme_base.tres" id="1_037ec"]
 [ext_resource type="Script" uid="uid://dxtm00owe3q0e" path="res://scenes/menu/menu.gd" id="1_klgdb"]
@@ -6,9 +6,6 @@
 [ext_resource type="FontFile" uid="uid://5joqatek3cn2" path="res://assets/fonts/Audiowide-Regular.ttf" id="3_037ec"]
 [ext_resource type="AudioStream" uid="uid://c1cw0ulmyvd6x" path="res://assets/audios/menu.wav" id="5_y1o0p"]
 [ext_resource type="Script" uid="uid://ke8vda81p2fg" path="res://utils/sfx_manager.gd" id="7_3y2rt"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_037ec"]
-bg_color = Color(0.17131117, 0.071976595, 0.34368917, 1)
 
 [sub_resource type="FontVariation" id="FontVariation_y1o0p"]
 base_font = ExtResource("2_e0arn")
@@ -25,7 +22,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_037ec")
-theme_override_styles/panel = SubResource("StyleBoxFlat_037ec")
 script = ExtResource("1_klgdb")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -55,27 +51,25 @@ theme_override_colors/font_color = Color(0.46666667, 1, 1, 0.7411765)
 theme_override_fonts/font = ExtResource("3_037ec")
 theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxEmpty_y1o0p")
-text = "like tetris but better (TM)"
+text = "tetris but with a rhythmic twist"
 horizontal_alignment = 1
 
 [node name="ButtonsContainer" type="VBoxContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/separation = 24
 alignment = 1
 
 [node name="PlayButton" type="Button" parent="VBoxContainer/ButtonsContainer"]
-custom_minimum_size = Vector2(180, 60)
 layout_mode = 2
 text = "Play"
 
 [node name="EditorButton" type="Button" parent="VBoxContainer/ButtonsContainer"]
-custom_minimum_size = Vector2(180, 60)
 layout_mode = 2
-text = "Level Editor"
+text = "Edit Levels"
 
 [node name="QuitButton" type="Button" parent="VBoxContainer/ButtonsContainer"]
-custom_minimum_size = Vector2(180, 60)
 layout_mode = 2
 text = "Quit"
 
