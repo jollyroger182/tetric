@@ -13,4 +13,5 @@ func _process(_delta: float) -> void:
 		return
 	if conductor.playback_pos >= last_fall + fall_interval:
 		piece.try_move(Vector2i.DOWN)
-		last_fall += fall_interval
+		while conductor.playback_pos >= last_fall + fall_interval:
+			last_fall += fall_interval

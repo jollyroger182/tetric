@@ -88,3 +88,11 @@ func try_rotate(ccw: bool):
 func hard_drop():
 	while try_move(Vector2i.DOWN):
 		pass
+
+
+func _on_soft_drop_start() -> void:
+	gravity.fall_interval /= 8
+
+
+func _on_soft_drop_end() -> void:
+	gravity.fall_interval *= 8

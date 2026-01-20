@@ -23,3 +23,6 @@ piece = NodePath("..")
 [node name="Gravity" type="Node" parent="." node_paths=PackedStringArray("piece")]
 script = ExtResource("4_tfj2p")
 piece = NodePath("..")
+
+[connection signal="soft_drop_end" from="InputHandler" to="." method="_on_soft_drop_end"]
+[connection signal="soft_drop_start" from="InputHandler" to="." method="_on_soft_drop_start"]
