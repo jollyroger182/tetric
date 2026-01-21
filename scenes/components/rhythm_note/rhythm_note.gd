@@ -14,7 +14,7 @@ func _process(_delta: float) -> void:
 		if not _is_expired:
 			expired.emit(self)
 			_is_expired = true
-	else:
+	elif abs(time - conductor.playback_pos) < 7:
 		queue_redraw()
 
 
