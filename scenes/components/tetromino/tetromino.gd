@@ -33,7 +33,7 @@ func _ready() -> void:
 	modulate = shape["color"]
 	if board:
 		# i'm on a board, enable falling and stuff
-		offset.x += shape["center"].x
+		#offset.x += shape["center"].x
 		$Gravity.conductor = board.conductor
 		$InputHandler.rhythm = rhythm
 		update_position()

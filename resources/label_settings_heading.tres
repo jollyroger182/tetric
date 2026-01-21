@@ -6,4 +6,4 @@ variation_embolden = 0.25
 [resource]
 font = SubResource("FontVariation_qcmsd")
 font_size = 64
-font_color = Color(4.813075e-07, 0.78024966, 0.78388083, 1)
+font_color = Color(0, 0.78039217, 0.78431374, 1)

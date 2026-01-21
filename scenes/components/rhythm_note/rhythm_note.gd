@@ -20,4 +20,4 @@ func _process(_delta: float) -> void:
 
 func _draw():
 	var radius = (time - conductor.playback_pos) * 300 + 50
-	draw_circle(Vector2.ZERO, radius, Color.WHITE, false, 2, true)
+	draw_circle(Vector2.ZERO, radius, Color("#77ffff"), false, 2, true)

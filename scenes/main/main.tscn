@@ -1,10 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://cuftekcatbj70"]
+[gd_scene load_steps=15 format=3 uid="uid://cuftekcatbj70"]
 
 [ext_resource type="Script" uid="uid://dl2aask6rqgmy" path="res://scenes/main/board.gd" id="1_hyk8p"]
 [ext_resource type="Script" uid="uid://c5ssj84mmqqk0" path="res://scenes/main/main.gd" id="1_iuonh"]
 [ext_resource type="Script" uid="uid://o7jmuxpr56yq" path="res://scenes/main/rhythm.gd" id="3_b1x3f"]
 [ext_resource type="PackedScene" uid="uid://cvv8knlqearhw" path="res://scenes/pause_menu/pause_menu.tscn" id="3_k2fmo"]
-[ext_resource type="Script" uid="uid://cc4r8bnlwohyw" path="res://scenes/main/notes_container.gd" id="4_a8run"]
 [ext_resource type="Script" uid="uid://ncieqt2bdoth" path="res://scenes/main/pause_manager.gd" id="4_l3cfh"]
 [ext_resource type="Script" uid="uid://cfymfv4422fwj" path="res://utils/conductor.gd" id="5_6q06x"]
 [ext_resource type="Script" uid="uid://cl65k7l5mwmam" path="res://scenes/main/scorekeeper.gd" id="7_hujxm"]
@@ -27,32 +26,6 @@ border_width_bottom = 2
 [node name="Main" type="Node2D"]
 script = ExtResource("1_iuonh")
 
-[node name="Board" type="Node2D" parent="." node_paths=PackedStringArray("conductor", "scorekeeper", "rhythm")]
-script = ExtResource("1_hyk8p")
-conductor = NodePath("../Conductor")
-scorekeeper = NodePath("../Scorekeeper")
-rhythm = NodePath("../Rhythm")
-
-[node name="Rhythm" type="Node2D" parent="." node_paths=PackedStringArray("conductor", "scorekeeper")]
-position = Vector2(920, 360)
-script = ExtResource("3_b1x3f")
-conductor = NodePath("../Conductor")
-scorekeeper = NodePath("../Scorekeeper")
-
-[node name="Notes" type="Node2D" parent="Rhythm"]
-clip_children = 1
-script = ExtResource("4_a8run")
-
-[node name="PauseManager" type="Node" parent="."]
-process_mode = 3
-script = ExtResource("4_l3cfh")
-
-[node name="Conductor" type="AudioStreamPlayer" parent="."]
-script = ExtResource("5_6q06x")
-
-[node name="Scorekeeper" type="Node" parent="."]
-script = ExtResource("7_hujxm")
-
 [node name="Background" type="CanvasLayer" parent="."]
 layer = -1
 
@@ -64,6 +37,32 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("9_th5th")
 theme_override_styles/panel = SubResource("StyleBoxFlat_th5th")
+metadata/_edit_use_anchors_ = true
+
+[node name="Board" type="Node2D" parent="." node_paths=PackedStringArray("conductor", "scorekeeper", "rhythm")]
+position = Vector2(480, 40)
+script = ExtResource("1_hyk8p")
+conductor = NodePath("../Conductor")
+scorekeeper = NodePath("../Scorekeeper")
+rhythm = NodePath("../Rhythm")
+
+[node name="Rhythm" type="Node2D" parent="." node_paths=PackedStringArray("conductor", "scorekeeper")]
+position = Vector2(640, 360)
+script = ExtResource("3_b1x3f")
+conductor = NodePath("../Conductor")
+scorekeeper = NodePath("../Scorekeeper")
+
+[node name="Notes" type="Node2D" parent="Rhythm"]
+
+[node name="PauseManager" type="Node" parent="."]
+process_mode = 3
+script = ExtResource("4_l3cfh")
+
+[node name="Conductor" type="AudioStreamPlayer" parent="."]
+script = ExtResource("5_6q06x")
+
+[node name="Scorekeeper" type="Node" parent="."]
+script = ExtResource("7_hujxm")
 
 [node name="PauseLayer" type="CanvasLayer" parent="."]
 layer = 1000
@@ -75,12 +74,13 @@ visible = false
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="ScorePanel" type="Panel" parent="UI"]
-offset_left = 380.0
+offset_left = 35.0
 offset_top = 35.0
-offset_right = 580.0
+offset_right = 255.0
 offset_bottom = 685.0
 theme = ExtResource("9_th5th")
 theme_override_styles/panel = SubResource("StyleBoxFlat_7smn1")
+metadata/_edit_use_anchors_ = true
 
 [node name="PlayingStaticLabel" type="Label" parent="UI/ScorePanel"]
 layout_mode = 1
@@ -93,6 +93,7 @@ grow_horizontal = 2
 text = "NOW PLAYING"
 label_settings = ExtResource("10_th5th")
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="PlayingLabel" type="Label" parent="UI/ScorePanel"]
 layout_mode = 1
@@ -104,6 +105,7 @@ offset_right = -10.0
 grow_horizontal = 2
 text = "Your Mom"
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="ScoreStaticLabel" type="Label" parent="UI/ScorePanel"]
 layout_mode = 1
@@ -116,6 +118,7 @@ grow_horizontal = 2
 text = "Score"
 label_settings = ExtResource("10_th5th")
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="ScoreLabel" type="Label" parent="UI/ScorePanel"]
 layout_mode = 1
@@ -127,6 +130,7 @@ offset_top = 140.0
 grow_horizontal = 2
 text = "0"
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="TotalStaticLabel" type="Label" parent="UI/ScorePanel"]
 layout_mode = 1
@@ -139,6 +143,7 @@ grow_horizontal = 2
 text = "Total"
 label_settings = ExtResource("10_th5th")
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="TotalLabel" type="Label" parent="UI/ScorePanel"]
 layout_mode = 1
@@ -150,6 +155,7 @@ offset_right = 90.0
 grow_horizontal = 2
 text = "0"
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="HitsStaticLabel" type="Label" parent="UI/ScorePanel"]
 layout_mode = 1
@@ -162,6 +168,7 @@ grow_horizontal = 2
 text = "Hits"
 label_settings = ExtResource("10_th5th")
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="HitsLabel" type="Label" parent="UI/ScorePanel"]
 layout_mode = 1
@@ -173,6 +180,7 @@ offset_top = 220.0
 grow_horizontal = 2
 text = "0"
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="MissesStaticLabel" type="Label" parent="UI/ScorePanel"]
 layout_mode = 1
@@ -185,6 +193,7 @@ grow_horizontal = 2
 text = "Misses"
 label_settings = ExtResource("10_th5th")
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="MissesLabel" type="Label" parent="UI/ScorePanel"]
 layout_mode = 1
@@ -196,6 +205,7 @@ offset_right = 90.0
 grow_horizontal = 2
 text = "0"
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="NextStaticLabel" type="Label" parent="UI/ScorePanel"]
 layout_mode = 1
@@ -208,6 +218,7 @@ grow_horizontal = 2
 text = "UP NEXT"
 label_settings = ExtResource("10_th5th")
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Next" type="Control" parent="UI/ScorePanel"]
 layout_mode = 1
@@ -220,6 +231,7 @@ offset_right = 80.0
 offset_bottom = 520.0
 grow_horizontal = 2
 script = ExtResource("8_yyfjg")
+metadata/_edit_use_anchors_ = true
 
 [node name="ScoreLayer" type="CanvasLayer" parent="."]
 layer = 2000

@@ -14,11 +14,6 @@ signal game_over
 var filled_tiles: Dictionary = {}
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	position = Vector2(40, 40)
-
-
 func _draw():
 	var width = Constants.BOARD_SIZE.x * Constants.SIZE + 10
 	var height = Constants.BOARD_SIZE.y * Constants.SIZE + 10

@@ -101,6 +101,11 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "BLEH"
 
+[node name="Line2D" type="Line2D" parent="UI"]
+points = PackedVector2Array(640, 320, 640, 480)
+width = 5.0
+default_color = Color(0, 0.5724773, 0.5748657, 1)
+
 [connection signal="cancelled" from="FilePicker" to="." method="_on_file_picker_cancelled"]
 [connection signal="selected" from="FilePicker" to="." method="_on_file_picker_selected"]
 [connection signal="add_note" from="InputHandler" to="." method="_on_add_note"]

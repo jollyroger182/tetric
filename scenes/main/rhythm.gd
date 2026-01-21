@@ -12,8 +12,7 @@ var notes: Array[Node2D] = []
 
 
 func _draw():
-	draw_rect(Rect2(-325, -325, 650, 650), Color.WHITE, false)
-	draw_circle(Vector2.ZERO, 50, Color.CYAN, false, 5, true)
+	draw_circle(Vector2.ZERO, 50, Color("#008b8b"), false, 5, true)
 
 
 func _on_note_expired(note: Node2D):

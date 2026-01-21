@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cvv8knlqearhw"]
+[gd_scene load_steps=5 format=3 uid="uid://cvv8knlqearhw"]
 
 [ext_resource type="Script" uid="uid://waq1fj63asf5" path="res://scenes/pause_menu/pause_menu.gd" id="1_5bgjm"]
 [ext_resource type="Theme" uid="uid://d3m46y6fmbccy" path="res://resources/theme_base.tres" id="1_qcmsd"]
 [ext_resource type="LabelSettings" uid="uid://cm32281ckbiq1" path="res://resources/label_settings_heading.tres" id="3_10tpt"]
+[ext_resource type="Script" uid="uid://ke8vda81p2fg" path="res://utils/sfx_manager.gd" id="4_0a7io"]
 
 [node name="PauseMenu" type="Panel"]
 process_mode = 2
@@ -52,5 +53,10 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Main menu"
 
+[node name="SFX" type="AudioStreamPlayer" parent="."]
+script = ExtResource("4_0a7io")
+
+[connection signal="mouse_entered" from="VBoxContainer/HBoxContainer/ResumeButton" to="." method="_on_button_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/ResumeButton" to="." method="_on_resume"]
+[connection signal="mouse_entered" from="VBoxContainer/HBoxContainer/QuitButton" to="." method="_on_button_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/QuitButton" to="." method="_on_quit"]
