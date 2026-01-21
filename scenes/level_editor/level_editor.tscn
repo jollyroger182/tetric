@@ -115,6 +115,7 @@ default_color = Color(0, 0.5724773, 0.5748657, 1)
 [connection signal="add_note" from="InputHandler" to="." method="_on_input_add_note"]
 [connection signal="play_pause" from="InputHandler" to="." method="_on_input_play_pause"]
 [connection signal="redo" from="InputHandler" to="." method="_on_input_redo"]
+[connection signal="seek" from="InputHandler" to="." method="_on_input_seek"]
 [connection signal="undo" from="InputHandler" to="." method="_on_input_undo"]
 [connection signal="note_deleted" from="UI/Notes" to="." method="_on_note_deleted"]
 [connection signal="pressed" from="UI/ButtonsContainer/BackwardButton" to="." method="_on_seek_back"]

@@ -1,7 +1,5 @@
 extends Node2D
 
-const GameFile = preload("res://utils/game_file.gd")
-
 @onready var board: Board = $Board
 @onready var rhythm = $Rhythm
 @onready var pause_manager = $PauseManager
@@ -23,6 +21,8 @@ const GameFile = preload("res://utils/game_file.gd")
 @onready var score_misses = $ScoreLayer/Panel/VBoxContainer/Stats/Misses/Value
 @onready var score_score = $ScoreLayer/Panel/VBoxContainer/Score/Value
 
+@onready var sfx = $SFX
+
 
 var level: Dictionary
 
@@ -30,8 +30,7 @@ var level: Dictionary
 func _ready() -> void:
 	print("playing level: ", GameState.playing_level)
 	
-	var game_file = GameFile.new()
-	level = game_file.load_file(GameState.playing_level)
+	level = GameFile.load_file(GameState.playing_level)
 	if not level["success"]:
 		print("failed to load level: ", level)
 		get_tree().change_scene_to_file("res://scenes/menu/menu.tscn")
@@ -83,8 +82,14 @@ func _on_music_finished() -> void:
 
 
 func _on_replay() -> void:
+	await sfx.play_sound("confirm", true)
 	get_tree().reload_current_scene()
 
 
 func _on_menu() -> void:
+	await sfx.play_sound("cancel", true)
 	get_tree().change_scene_to_file("res://scenes/menu/menu.tscn")
+
+
+func _on_button_mouse_entered() -> void:
+	sfx.play_sound("select")

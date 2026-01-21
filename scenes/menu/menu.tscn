@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dxtm00owe3q0e" path="res://scenes/menu/menu.gd" id="1_klgdb"]
 [ext_resource type="FontFile" uid="uid://bg5d6vo2gsvqc" path="res://assets/fonts/PressStart2P-Regular.ttf" id="2_e0arn"]
 [ext_resource type="FontFile" uid="uid://5joqatek3cn2" path="res://assets/fonts/Audiowide-Regular.ttf" id="3_037ec"]
-[ext_resource type="AudioStream" uid="uid://c1cw0ulmyvd6x" path="res://assets/audios/menu.wav" id="5_y1o0p"]
+[ext_resource type="AudioStream" uid="uid://ny0f6vrabvmv" path="res://assets/audios/title.wav" id="5_r8yej"]
 [ext_resource type="Script" uid="uid://ke8vda81p2fg" path="res://utils/sfx_manager.gd" id="7_3y2rt"]
 
 [sub_resource type="FontVariation" id="FontVariation_y1o0p"]
@@ -75,7 +75,7 @@ layout_mode = 2
 text = "Quit"
 
 [node name="BGM" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_y1o0p")
+stream = ExtResource("5_r8yej")
 autoplay = true
 
 [node name="SFX" type="AudioStreamPlayer" parent="."]

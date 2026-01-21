@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://dai5ayf4vnrva"]
+
+[ext_resource type="Script" uid="uid://dytqqrpf5udcy" path="res://scenes/components/level_item/level_item.gd" id="1_hqnbo"]
+[ext_resource type="LabelSettings" uid="uid://cmhq53knjfnbd" path="res://resources/label_settings_subheading.tres" id="2_r0ikd"]
+
+[node name="LevelItem" type="PanelContainer"]
+offset_right = 275.0
+offset_bottom = 42.0
+script = ExtResource("1_hqnbo")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Your Mom"
+label_settings = ExtResource("2_r0ikd")
+
+[node name="Label2" type="Label" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Some text"
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+
+[connection signal="mouse_entered" from="Button" to="." method="_on_button_mouse_entered"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

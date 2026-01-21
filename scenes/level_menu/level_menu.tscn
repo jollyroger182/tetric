@@ -1,0 +1,70 @@
+[gd_scene load_steps=7 format=3 uid="uid://dyawwkkmce07a"]
+
+[ext_resource type="Theme" uid="uid://d3m46y6fmbccy" path="res://resources/theme_base.tres" id="1_hcm4l"]
+[ext_resource type="LabelSettings" uid="uid://cm32281ckbiq1" path="res://resources/label_settings_heading.tres" id="2_8xmkv"]
+[ext_resource type="Script" uid="uid://c2obey56vi172" path="res://scenes/level_menu/level_menu.gd" id="2_bvllw"]
+[ext_resource type="AudioStream" uid="uid://c1cw0ulmyvd6x" path="res://assets/audios/menu.wav" id="3_bvllw"]
+[ext_resource type="PackedScene" uid="uid://dweiuwu61lyfe" path="res://scenes/components/file_picker/file_picker.tscn" id="3_jw3qw"]
+[ext_resource type="Script" uid="uid://ke8vda81p2fg" path="res://utils/sfx_manager.gd" id="5_bvllw"]
+
+[node name="LevelMenu" type="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_hcm4l")
+script = ExtResource("2_bvllw")
+
+[node name="CustomLevelPicker" parent="." instance=ExtResource("3_jw3qw")]
+filter = "*.zip;.ZIP Game Files;application/zip"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 40.0
+offset_right = -40.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 30
+
+[node name="Heading" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="HeadingLabel" type="Label" parent="ScrollContainer/VBoxContainer/Heading"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Select a level"
+label_settings = ExtResource("2_8xmkv")
+
+[node name="LoadButton" type="Button" parent="ScrollContainer/VBoxContainer/Heading"]
+layout_mode = 2
+size_flags_vertical = 4
+text = "Or load a custom level?"
+
+[node name="BackButton" type="Button" parent="ScrollContainer/VBoxContainer/Heading"]
+layout_mode = 2
+size_flags_vertical = 4
+text = "Main menu"
+
+[node name="BGM" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_bvllw")
+autoplay = true
+
+[node name="SFX" type="AudioStreamPlayer" parent="."]
+script = ExtResource("5_bvllw")
+
+[connection signal="selected" from="CustomLevelPicker" to="." method="_on_custom_level_selected"]
+[connection signal="mouse_entered" from="ScrollContainer/VBoxContainer/Heading/LoadButton" to="." method="_on_button_mouse_entered"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/Heading/LoadButton" to="." method="_on_load_custom_level"]
+[connection signal="mouse_entered" from="ScrollContainer/VBoxContainer/Heading/BackButton" to="." method="_on_button_mouse_entered"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/Heading/BackButton" to="." method="_on_back"]

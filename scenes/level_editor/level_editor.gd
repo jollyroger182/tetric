@@ -1,8 +1,6 @@
 extends Node2D
 class_name LevelEditor
 
-var GameFile = preload("res://utils/game_file.gd")
-
 @onready var player = $Conductor
 @onready var play_button = $UI/ButtonsContainer/PlayButton
 @onready var ui_title = $UI/Title
@@ -13,14 +11,14 @@ var _music_stream: AudioStreamWAV
 
 var _name: String = "test.wav"
 
+# loading stuff
 
 func _ready() -> void:
 	$FilePicker.pick()
 
 
 func _on_file_picker_selected(path: String) -> void:
-	var game_file = GameFile.new()
-	var level = game_file.load_file(path)
+	var level = GameFile.load_file(path)
 	
 	if level["success"]:
 		# selected a level zip file
@@ -88,6 +86,13 @@ func redo():
 	if action:
 		_perform_action(action)
 
+
+func seek(offset: float):
+	if player.stream_paused:
+		player.unpause()
+	player.seek(max(0, min(_music_stream.get_length(), player.playback_pos + offset)))
+
+
 # button events
 
 func _on_play() -> void:
@@ -98,15 +103,11 @@ func _on_play() -> void:
 
 
 func _on_seek_back() -> void:
-	if player.stream_paused:
-		player.unpause()
-	player.seek(max(0, player.playback_pos - 5))
+	seek(-5)
 
 
 func _on_seek_forward() -> void:
-	if player.stream_paused:
-		player.unpause()
-	player.seek(min(_music_stream.get_length(), player.playback_pos + 5))
+	seek(5)
 
 
 func _on_save() -> void:
@@ -120,8 +121,7 @@ func _on_save() -> void:
 		"music_data": music_data
 	}
 	
-	var game_file = GameFile.new()
-	game_file.save_file(level, "user://level.zip")
+	GameFile.save_file(level, "user://level.zip")
 	
 	if OS.has_feature("web"):
 		var data = FileAccess.get_file_as_bytes("user://level.zip")
@@ -140,6 +140,10 @@ func _on_choose() -> void:
 
 # events
 
+func _on_note_deleted(time: float) -> void:
+	undo_manager.push_action({ "type": "delete", "time": time })
+
+
 func _on_input_play_pause() -> void:
 	_on_play()
 
@@ -156,5 +160,5 @@ func _on_input_undo() -> void:
 	undo()
 
 
-func _on_note_deleted(time: float) -> void:
-	undo_manager.push_action({ "type": "delete", "time": time })
+func _on_input_seek(amount: float) -> void:
+	seek(amount)
