@@ -7,6 +7,7 @@ var GameFile = preload("res://utils/game_file.gd")
 @onready var play_button = $UI/ButtonsContainer/PlayButton
 @onready var ui_title = $UI/Title
 @onready var ui_notes = $UI/Notes
+@onready var undo_manager = $UndoManager
 
 var _music_stream: AudioStreamWAV
 
@@ -46,6 +47,46 @@ func _on_file_picker_cancelled() -> void:
 func _process(_delta: float) -> void:
 	if _music_stream:
 		play_button.text = "⏸️" if player.playing else "▶️"
+
+# perform action
+
+func _perform_action(action):
+	var type = action["type"]
+	match type:
+		"add":
+			var time = action["time"]
+			ui_notes.add_note(time)
+		"delete":
+			var time = action["time"]
+			ui_notes.delete_note(time)
+
+
+func _undo_action(action):
+	var type = action["type"]
+	match type:
+		"add":
+			var time = action["time"]
+			ui_notes.delete_note(time)
+		"delete":
+			var time = action["time"]
+			ui_notes.add_note(time)
+
+
+func perform_action(action):
+	_perform_action(action)
+	undo_manager.push_action(action)
+
+
+func undo():
+	var action = undo_manager.undo()
+	if action:
+		_undo_action(action)
+
+
+func redo():
+	var action = undo_manager.redo()
+	if action:
+		_perform_action(action)
 
 # button events
 
@@ -97,11 +138,23 @@ func _on_quit() -> void:
 func _on_choose() -> void:
 	get_tree().reload_current_scene()
 
-# keyboard events
+# events
 
-func _on_play_pause() -> void:
+func _on_input_play_pause() -> void:
 	_on_play()
 
 
-func _on_add_note() -> void:
-	ui_notes.add_note(player.playback_pos)
+func _on_input_add_note() -> void:
+	perform_action({ "type": "add", "time": player.playback_pos })
+
+
+func _on_input_redo() -> void:
+	redo()
+
+
+func _on_input_undo() -> void:
+	undo()
+
+
+func _on_note_deleted(time: float) -> void:
+	undo_manager.push_action({ "type": "delete", "time": time })

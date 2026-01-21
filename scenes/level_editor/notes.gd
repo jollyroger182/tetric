@@ -2,6 +2,8 @@ extends ColorRect
 
 var EditorNote = preload("res://scenes/level_editor/editor_note.tscn")
 
+signal note_deleted(time: float)
+
 @export var editor: LevelEditor
 
 var notes: Array = []
@@ -25,7 +27,18 @@ func add_note(time: float):
 	notes.sort()
 
 
+func delete_note(time: float):
+	for note in get_children():
+		if note is EditorNote and note.time == time:
+			_delete_note(note)
+
+
 func _on_note_deleted(note: EditorNote):
+	note_deleted.emit(note.time)
+	_delete_note(note)
+
+
+func _delete_note(note: EditorNote):
 	note.queue_free()
 	
 	var index = notes.find(note.time)
