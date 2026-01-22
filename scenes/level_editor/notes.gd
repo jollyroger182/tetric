@@ -14,7 +14,7 @@ func update_size():
 
 
 func _process(_delta: float) -> void:
-	position.x = get_viewport().get_visible_rect().size.x / 2 - Constants.EDITOR_SCALE * editor.player.playback_pos
+	position.x = get_viewport().get_visible_rect().size.x / 2 - Constants.EDITOR_SCALE * (editor.player.playback_pos - Settings.offset / 1000.0)
 
 
 func add_note(time: float):

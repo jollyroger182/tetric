@@ -145,11 +145,14 @@ func _on_note_deleted(time: float) -> void:
 
 
 func _on_input_play_pause() -> void:
-	_on_play()
+	if _music_stream:
+		_on_play()
 
 
 func _on_input_add_note() -> void:
-	perform_action({ "type": "add", "time": player.playback_pos })
+	if _music_stream:
+		var time = max(0, min(_music_stream.get_length(), player.playback_pos - Settings.offset / 1000.0))
+		perform_action({ "type": "add", "time": time })
 
 
 func _on_input_redo() -> void:
@@ -161,4 +164,5 @@ func _on_input_undo() -> void:
 
 
 func _on_input_seek(amount: float) -> void:
-	seek(amount)
+	if _music_stream:
+		seek(amount)
