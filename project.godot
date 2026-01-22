@@ -22,6 +22,7 @@ GameState="*res://autoloads/game_state.gd"
 Randomizer="*res://autoloads/randomizer.gd"
 GameFile="*res://autoloads/game_file.gd"
 Settings="*res://autoloads/settings.gd"
+Utils="*res://autoloads/utils.gd"
 
 [display]
 

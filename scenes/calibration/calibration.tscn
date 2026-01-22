@@ -1,0 +1,93 @@
+[gd_scene load_steps=9 format=3 uid="uid://d1brv5ds1fgen"]
+
+[ext_resource type="Theme" uid="uid://d3m46y6fmbccy" path="res://resources/theme_base.tres" id="1_hbrkc"]
+[ext_resource type="LabelSettings" uid="uid://cm32281ckbiq1" path="res://resources/label_settings_heading.tres" id="2_d6e5j"]
+[ext_resource type="Script" uid="uid://o0qm1v8m2374" path="res://scenes/calibration/calibration.gd" id="2_x1duk"]
+[ext_resource type="LabelSettings" uid="uid://cmhq53knjfnbd" path="res://resources/label_settings_subheading.tres" id="3_bp2rx"]
+[ext_resource type="LabelSettings" uid="uid://cusqa6qxfwtdf" path="res://resources/label_settings_section_heading.tres" id="5_h1pmo"]
+[ext_resource type="Script" uid="uid://cfymfv4422fwj" path="res://utils/conductor.gd" id="5_m8c00"]
+[ext_resource type="AudioStream" uid="uid://bgp1tn00l0pqx" path="res://assets/audios/calibration.wav" id="6_h1pmo"]
+[ext_resource type="Script" uid="uid://ke8vda81p2fg" path="res://utils/sfx_manager.gd" id="7_m8c00"]
+
+[node name="Calibration" type="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_hbrkc")
+script = ExtResource("2_x1duk")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 40.0
+offset_right = -40.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Calibration"
+label_settings = ExtResource("2_d6e5j")
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+custom_minimum_size = Vector2(1200, 0)
+layout_mode = 2
+text = "Please press the Space key on every beat. When you're done, press the Finish button."
+label_settings = ExtResource("3_bp2rx")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="StartButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Start"
+
+[node name="FinishButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Finish"
+
+[node name="DiscardButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Quit without saving"
+
+[node name="OffsetLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Last offset: 0ms
+Average offset: 0ms"
+label_settings = ExtResource("5_h1pmo")
+horizontal_alignment = 1
+
+[node name="CountdownLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 500
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Conductor" type="AudioStreamPlayer" parent="."]
+script = ExtResource("5_m8c00")
+audio = ExtResource("6_h1pmo")
+
+[node name="SFX" type="AudioStreamPlayer" parent="."]
+script = ExtResource("7_m8c00")
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/StartButton" to="." method="_on_start"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/FinishButton" to="." method="_on_finish"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/DiscardButton" to="." method="_on_discard"]

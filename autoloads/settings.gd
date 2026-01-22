@@ -17,4 +17,5 @@ func _ready() -> void:
 
 
 func save():
+	config.set_value("gameplay", "offset", offset)
 	config.save(FILE_PATH)
