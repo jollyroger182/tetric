@@ -21,12 +21,18 @@ func _on_play():
 
 
 func _on_level_editor() -> void:
+	await sfx.play_sound("confirm", true)
 	get_tree().change_scene_to_file("res://scenes/level_editor/level_editor.tscn")
 
 
 func _on_quit():
 	await sfx.play_sound("confirm", true)
 	get_tree().quit()
+
+
+func _on_settings() -> void:
+	await sfx.play_sound("confirm", true)
+	get_tree().change_scene_to_file("res://scenes/settings/settings.tscn")
 
 
 func _on_mouse_entered_button():

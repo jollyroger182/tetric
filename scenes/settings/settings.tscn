@@ -1,0 +1,125 @@
+[gd_scene load_steps=9 format=3 uid="uid://c3hc7atgc13cg"]
+
+[ext_resource type="Theme" uid="uid://d3m46y6fmbccy" path="res://resources/theme_base.tres" id="1_26ncd"]
+[ext_resource type="LabelSettings" uid="uid://cm32281ckbiq1" path="res://resources/label_settings_heading.tres" id="2_1slea"]
+[ext_resource type="Script" uid="uid://dxh2wgc04id5j" path="res://scenes/settings/settings.gd" id="2_vghtj"]
+[ext_resource type="LabelSettings" uid="uid://cmhq53knjfnbd" path="res://resources/label_settings_subheading.tres" id="3_v1hle"]
+[ext_resource type="LabelSettings" uid="uid://cusqa6qxfwtdf" path="res://resources/label_settings_section_heading.tres" id="4_vghtj"]
+[ext_resource type="Texture2D" uid="uid://dmxkx0nh7s6n7" path="res://assets/images/icon_minus.png" id="5_vimye"]
+[ext_resource type="Script" uid="uid://ke8vda81p2fg" path="res://utils/sfx_manager.gd" id="6_h6son"]
+[ext_resource type="Texture2D" uid="uid://cxjw7r2vrs5bm" path="res://assets/images/icon_plus.png" id="7_p7ghj"]
+
+[node name="Settings" type="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_26ncd")
+script = ExtResource("2_vghtj")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 40.0
+offset_right = -40.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 50
+
+[node name="Heading" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="HeadingLabel" type="Label" parent="VBoxContainer/Heading"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Settings"
+label_settings = ExtResource("2_1slea")
+
+[node name="BackButton" type="Button" parent="VBoxContainer/Heading"]
+layout_mode = 2
+size_flags_vertical = 4
+text = "Main menu"
+
+[node name="Settings" type="GridContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/v_separation = 50
+columns = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Settings"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="OffsetLabel" type="Label" parent="VBoxContainer/Settings/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Input offset"
+label_settings = ExtResource("3_v1hle")
+
+[node name="OffsetHelp" type="Label" parent="VBoxContainer/Settings/VBoxContainer"]
+layout_mode = 2
+text = "Increase this if you're hitting too late."
+
+[node name="Offset" type="HBoxContainer" parent="VBoxContainer/Settings"]
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_constants/separation = 40
+
+[node name="MinusButton" type="Button" parent="VBoxContainer/Settings/Offset"]
+modulate = Color(0.46666667, 1, 1, 1)
+layout_mode = 2
+icon = ExtResource("5_vimye")
+
+[node name="Value" type="Label" parent="VBoxContainer/Settings/Offset"]
+layout_mode = 2
+text = "+0ms"
+label_settings = ExtResource("4_vghtj")
+
+[node name="PlusButton" type="Button" parent="VBoxContainer/Settings/Offset"]
+modulate = Color(0.46666667, 1, 1, 1)
+layout_mode = 2
+icon = ExtResource("7_p7ghj")
+
+[node name="CalibrateButton" type="Button" parent="VBoxContainer/Settings"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+text = "Calibrate"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/Settings"]
+layout_mode = 2
+
+[node name="HelpLabel" type="Label" parent="VBoxContainer/Settings/VBoxContainer2"]
+layout_mode = 2
+text = "Tutorial"
+label_settings = ExtResource("3_v1hle")
+
+[node name="HelpHelp" type="Label" parent="VBoxContainer/Settings/VBoxContainer2"]
+layout_mode = 2
+text = "Wait, how do i play this game?"
+
+[node name="Empty1" type="Control" parent="VBoxContainer/Settings"]
+layout_mode = 2
+
+[node name="HelpButton" type="Button" parent="VBoxContainer/Settings"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+text = "Open tutorial"
+
+[node name="SFX" type="AudioStreamPlayer" parent="."]
+script = ExtResource("6_h6son")
+
+[connection signal="mouse_entered" from="VBoxContainer/Heading/BackButton" to="." method="_on_button_mouse_entered"]
+[connection signal="pressed" from="VBoxContainer/Heading/BackButton" to="." method="_on_back"]
+[connection signal="mouse_entered" from="VBoxContainer/Settings/Offset/MinusButton" to="." method="_on_button_mouse_entered"]
+[connection signal="pressed" from="VBoxContainer/Settings/Offset/MinusButton" to="." method="_on_offset_minus"]
+[connection signal="mouse_entered" from="VBoxContainer/Settings/Offset/PlusButton" to="." method="_on_button_mouse_entered"]
+[connection signal="pressed" from="VBoxContainer/Settings/Offset/PlusButton" to="." method="_on_offset_plus"]
+[connection signal="mouse_entered" from="VBoxContainer/Settings/CalibrateButton" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_entered" from="VBoxContainer/Settings/HelpButton" to="." method="_on_button_mouse_entered"]
