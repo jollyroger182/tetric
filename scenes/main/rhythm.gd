@@ -30,7 +30,7 @@ func load_level(level: Dictionary):
 	for time in times:
 		var note = RhythmNote.instantiate()
 		note.conductor = conductor
-		note.time = time
+		note.time = time + Settings.offset / 1000.0
 		note.expired.connect(_on_note_expired)
 		container.add_child(note)
 		notes.append(note)
