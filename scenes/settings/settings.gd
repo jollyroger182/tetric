@@ -46,3 +46,8 @@ func _on_offset_plus() -> void:
 func _on_calibrate() -> void:
 	await sfx.play_sound("confirm", true)
 	get_tree().change_scene_to_file("res://scenes/calibration/calibration.tscn")
+
+
+func _on_help() -> void:
+	await sfx.play_sound("confirm", true)
+	get_tree().change_scene_to_file("res://scenes/tutorial/tutorial.tscn")

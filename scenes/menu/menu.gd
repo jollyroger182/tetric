@@ -26,7 +26,7 @@ func _on_level_editor() -> void:
 
 
 func _on_quit():
-	await sfx.play_sound("confirm", true)
+	await sfx.play_sound("cancel", true)
 	get_tree().quit()
 
 
