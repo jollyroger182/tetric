@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://c1ieaag3h73tg"]
+
+[ext_resource type="Script" uid="uid://buyx0el2nn42a" path="res://scenes/components/file_saver/file_saver.gd" id="1_nrg3h"]
+[ext_resource type="Theme" uid="uid://d3m46y6fmbccy" path="res://resources/theme_base.tres" id="2_t0wds"]
+
+[node name="FileSaver" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nrg3h")
+
+[node name="Desktop" type="FileDialog" parent="."]
+oversampling_override = 1.0
+size = Vector2i(1280, 720)
+theme = ExtResource("2_t0wds")
+dialog_hide_on_ok = true
+access = 2
+use_native_dialog = true
+
+[node name="Block" type="CanvasLayer" parent="."]
+layer = 10000
+visible = false
+
+[node name="Panel" type="Panel" parent="Block"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[connection signal="canceled" from="Desktop" to="." method="_on_file_canceled"]
+[connection signal="file_selected" from="Desktop" to="." method="_on_file_selected"]

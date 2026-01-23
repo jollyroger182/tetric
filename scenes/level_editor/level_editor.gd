@@ -1,11 +1,18 @@
 extends Node2D
 class_name LevelEditor
 
-@onready var player = $Conductor
+const play_icon = preload("res://assets/images/icon_play.png")
+const pause_icon = preload("res://assets/images/icon_pause.png")
+const backward_icon = preload("res://assets/images/icon_backward.png")
+const forward_icon = preload("res://assets/images/icon_forward.png")
+
 @onready var play_button = $UI/ButtonsContainer/PlayButton
 @onready var ui_title = $UI/Title
 @onready var ui_notes = $UI/Notes
+
+@onready var player = $Conductor
 @onready var undo_manager = $UndoManager
+@onready var file_saver = $FileSaver
 
 var _music_stream: AudioStreamWAV
 
@@ -44,7 +51,7 @@ func _on_file_picker_cancelled() -> void:
 
 func _process(_delta: float) -> void:
 	if _music_stream:
-		play_button.text = "⏸️" if player.playing else "▶️"
+		play_button.icon = pause_icon if player.playing else play_icon
 
 # perform action
 
@@ -123,12 +130,8 @@ func _on_save() -> void:
 	
 	GameFile.save_file(level, "user://level.zip")
 	
-	if OS.has_feature("web"):
-		var data = FileAccess.get_file_as_bytes("user://level.zip")
-		JavaScriptBridge.download_buffer(data, "level.zip", "application/zip")
-	else:
-		# TODO prompt save
-		print("Saved to user data folder")
+	var data = FileAccess.get_file_as_bytes("user://level.zip")
+	file_saver.save(data, "level.zip", "application/zip", "Saved game file")
 
 
 func _on_quit() -> void:

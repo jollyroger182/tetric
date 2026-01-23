@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://clf7724ati23g"]
+[gd_scene load_steps=14 format=3 uid="uid://clf7724ati23g"]
 
 [ext_resource type="Script" uid="uid://bspxj0pxi0bpo" path="res://scenes/level_editor/level_editor.gd" id="1_ahyo7"]
 [ext_resource type="Script" uid="uid://cfymfv4422fwj" path="res://utils/conductor.gd" id="2_le4y8"]
+[ext_resource type="PackedScene" uid="uid://c1ieaag3h73tg" path="res://scenes/components/file_saver/file_saver.tscn" id="3_riedv"]
 [ext_resource type="Script" uid="uid://cqqd4gaqh0xmd" path="res://scenes/level_editor/input.gd" id="4_02gh2"]
 [ext_resource type="PackedScene" uid="uid://dweiuwu61lyfe" path="res://scenes/components/file_picker/file_picker.tscn" id="4_f4xfo"]
 [ext_resource type="Script" uid="uid://dcbgwhlvha0yc" path="res://scenes/level_editor/notes.gd" id="5_02gh2"]
@@ -9,12 +10,17 @@
 [ext_resource type="Theme" uid="uid://d3m46y6fmbccy" path="res://resources/theme_base.tres" id="6_4puek"]
 [ext_resource type="LabelSettings" uid="uid://cmhq53knjfnbd" path="res://resources/label_settings_subheading.tres" id="7_j7obp"]
 [ext_resource type="StyleBox" uid="uid://cyl52y74enl6i" path="res://resources/style_box_dark_background.tres" id="7_riedv"]
+[ext_resource type="Texture2D" uid="uid://c47pgcjvj4y41" path="res://assets/images/icon_backward.png" id="11_bjucn"]
+[ext_resource type="Texture2D" uid="uid://4q13t3ee8rc0" path="res://assets/images/icon_play.png" id="12_03yw0"]
+[ext_resource type="Texture2D" uid="uid://bgmmw1auy04nr" path="res://assets/images/icon_forward.png" id="13_bclc7"]
 
 [node name="LevelEditor" type="Node2D"]
 script = ExtResource("1_ahyo7")
 
 [node name="FilePicker" parent="." instance=ExtResource("4_f4xfo")]
 filter = "*.wav,*.wave,*.zip;.WAV Files and .ZIP Game Files;audio/vnd.wav,audio/vnd.wave,audio.wav,audio.wave,application/zip"
+
+[node name="FileSaver" parent="." instance=ExtResource("3_riedv")]
 
 [node name="Conductor" type="AudioStreamPlayer" parent="."]
 script = ExtResource("2_le4y8")
@@ -81,22 +87,25 @@ theme_override_constants/separation = 20
 alignment = 1
 
 [node name="BackwardButton" type="Button" parent="UI/ButtonsContainer"]
+modulate = Color(0.46666667, 1, 1, 1)
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
-text = "⏪"
+icon = ExtResource("11_bjucn")
 
 [node name="PlayButton" type="Button" parent="UI/ButtonsContainer"]
+modulate = Color(0.46666667, 1, 1, 1)
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
-text = "▶️"
+icon = ExtResource("12_03yw0")
 
 [node name="ForwardButton" type="Button" parent="UI/ButtonsContainer"]
+modulate = Color(0.46666667, 1, 1, 1)
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
-text = "⏩"
+icon = ExtResource("13_bclc7")
 
 [node name="SaveButton" type="Button" parent="UI/ButtonsContainer"]
 layout_mode = 2
