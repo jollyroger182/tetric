@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dfo614u0gpkkx"]
+
+[ext_resource type="Script" uid="uid://bd1dd86leqfw6" path="res://scenes/components/rhythm_note/rhythm_note.gd" id="1_xahaa"]
+
+[node name="RhythmNote" type="Node2D"]
+script = ExtResource("1_xahaa")

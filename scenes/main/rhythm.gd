@@ -1,7 +1,7 @@
 extends Node2D
 class_name Rhythm
 
-const RhythmNote = preload("res://scenes/components/rhythm_note/RhythmNote.tscn")
+const RhythmNote = preload("res://scenes/components/rhythm_note/rhythm_note.tscn")
 
 @onready var container = $Notes
 

@@ -1,13 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://bampfrfpgqrh2"]
+[gd_scene load_steps=3 format=3 uid="uid://bampfrfpgqrh2"]
 
 [ext_resource type="Script" uid="uid://pnfpt0cjr4pg" path="res://scenes/components/file_picker/desktop.gd" id="1_85ei8"]
+[ext_resource type="Theme" uid="uid://d3m46y6fmbccy" path="res://resources/theme_base.tres" id="2_divog"]
 
 [node name="Desktop" type="Node2D"]
 script = ExtResource("1_85ei8")
 
 [node name="FileDialog" type="FileDialog" parent="."]
+oversampling_override = 1.0
 title = "Open a File"
-size = Vector2i(1280, 720)
+position = Vector2i(16, 48)
+size = Vector2i(1248, 656)
+theme = ExtResource("2_divog")
 file_mode = 0
 access = 2
 

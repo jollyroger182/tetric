@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://clf7724ati23g"]
+[gd_scene load_steps=10 format=3 uid="uid://clf7724ati23g"]
 
 [ext_resource type="Script" uid="uid://bspxj0pxi0bpo" path="res://scenes/level_editor/level_editor.gd" id="1_ahyo7"]
 [ext_resource type="Script" uid="uid://cfymfv4422fwj" path="res://utils/conductor.gd" id="2_le4y8"]
@@ -6,9 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://dweiuwu61lyfe" path="res://scenes/components/file_picker/file_picker.tscn" id="4_f4xfo"]
 [ext_resource type="Script" uid="uid://dcbgwhlvha0yc" path="res://scenes/level_editor/notes.gd" id="5_02gh2"]
 [ext_resource type="Script" uid="uid://dyo0yr106cewp" path="res://utils/undo_manager.gd" id="5_chnju"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_lxx8n"]
-font_size = 32
+[ext_resource type="Theme" uid="uid://d3m46y6fmbccy" path="res://resources/theme_base.tres" id="6_4puek"]
+[ext_resource type="LabelSettings" uid="uid://cmhq53knjfnbd" path="res://resources/label_settings_subheading.tres" id="7_j7obp"]
+[ext_resource type="StyleBox" uid="uid://cyl52y74enl6i" path="res://resources/style_box_dark_background.tres" id="7_riedv"]
 
 [node name="LevelEditor" type="Node2D"]
 script = ExtResource("1_ahyo7")
@@ -25,6 +25,18 @@ script = ExtResource("4_02gh2")
 [node name="UndoManager" type="Node" parent="."]
 script = ExtResource("5_chnju")
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 0
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("6_4puek")
+theme_override_styles/panel = ExtResource("7_riedv")
+
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="Title" type="Label" parent="UI"]
@@ -36,8 +48,9 @@ anchor_bottom = 0.5
 offset_top = -200.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("6_4puek")
 text = "Currently editing: yourmom.wav"
-label_settings = SubResource("LabelSettings_lxx8n")
+label_settings = ExtResource("7_j7obp")
 
 [node name="Notes" type="ColorRect" parent="UI" node_paths=PackedStringArray("editor")]
 anchors_preset = 8
@@ -50,7 +63,7 @@ offset_right = 2000.0
 offset_bottom = 100.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.49411765)
+color = Color(0, 0, 0, 0.25882354)
 script = ExtResource("5_02gh2")
 editor = NodePath("../..")
 
@@ -63,6 +76,7 @@ offset_top = -120.0
 offset_bottom = -60.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("6_4puek")
 theme_override_constants/separation = 20
 alignment = 1
 

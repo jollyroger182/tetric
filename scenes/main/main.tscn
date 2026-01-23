@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dl2aask6rqgmy" path="res://scenes/main/board.gd" id="1_hyk8p"]
 [ext_resource type="Script" uid="uid://c5ssj84mmqqk0" path="res://scenes/main/main.gd" id="1_iuonh"]
+[ext_resource type="StyleBox" uid="uid://cyl52y74enl6i" path="res://resources/style_box_dark_background.tres" id="3_7smn1"]
 [ext_resource type="Script" uid="uid://o7jmuxpr56yq" path="res://scenes/main/rhythm.gd" id="3_b1x3f"]
 [ext_resource type="PackedScene" uid="uid://cvv8knlqearhw" path="res://scenes/pause_menu/pause_menu.tscn" id="3_k2fmo"]
 [ext_resource type="Script" uid="uid://ncieqt2bdoth" path="res://scenes/main/pause_manager.gd" id="4_l3cfh"]
@@ -13,9 +14,6 @@
 [ext_resource type="LabelSettings" uid="uid://cm32281ckbiq1" path="res://resources/label_settings_heading.tres" id="12_7smn1"]
 [ext_resource type="Script" uid="uid://ke8vda81p2fg" path="res://utils/sfx_manager.gd" id="13_7smn1"]
 [ext_resource type="LabelSettings" uid="uid://cmhq53knjfnbd" path="res://resources/label_settings_subheading.tres" id="13_th5th"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_th5th"]
-bg_color = Color(0.10349987, 0.04200191, 0.2134768, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7smn1"]
 bg_color = Color(3.970787e-07, 0.25769952, 0.2588898, 1)
@@ -37,7 +35,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("9_th5th")
-theme_override_styles/panel = SubResource("StyleBoxFlat_th5th")
+theme_override_styles/panel = ExtResource("3_7smn1")
 metadata/_edit_use_anchors_ = true
 
 [node name="Board" type="Node2D" parent="." node_paths=PackedStringArray("conductor", "scorekeeper", "rhythm")]
